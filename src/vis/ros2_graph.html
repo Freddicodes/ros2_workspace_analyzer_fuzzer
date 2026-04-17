@@ -1,0 +1,1317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ROS2 Graph Visualizer</title>
+<style>
+  :root {
+    --bg: #0b1220;
+    --panel: #121d30;
+    --panel-2: #17253d;
+    --line: #213654;
+    --text: #e6edf7;
+    --dim: #8fa2bd;
+    --good: #00c2a8;
+    --info: #1f8fff;
+    --warn: #f59e0b;
+    --bad: #ff6b6b;
+    --topic: #f6c26b;
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    background: radial-gradient(circle at 12% 10%, #13233c 0%, var(--bg) 50%);
+    color: var(--text);
+    font-family: "JetBrains Mono", monospace;
+  }
+
+  #bar {
+    height: 52px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0 14px;
+    background: var(--panel);
+    border-bottom: 1px solid var(--line);
+    flex-shrink: 0;
+  }
+
+  .title { color: var(--good); font-size: 12px; font-weight: 700; letter-spacing: .06em; }
+  .sep { width: 1px; height: 22px; background: var(--line); }
+  .stat { color: var(--dim); font-size: 11px; }
+  .stat b { color: var(--text); }
+  .spacer { flex: 1; }
+
+  button, input {
+    border: 1px solid var(--line);
+    background: var(--panel-2);
+    color: var(--text);
+    border-radius: 6px;
+    font-family: inherit;
+    font-size: 11px;
+  }
+
+  button { padding: 7px 12px; cursor: pointer; }
+  button:hover { border-color: var(--info); color: var(--info); }
+  button.active { border-color: var(--good); color: var(--good); }
+
+  #file-input { display: none; }
+  #ws-url { width: 220px; padding: 7px 10px; }
+
+  #ws-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--line);
+  }
+  #ws-dot.ok { background: var(--good); box-shadow: 0 0 8px var(--good); }
+  #ws-dot.connecting { background: var(--warn); }
+  #ws-dot.err { background: var(--bad); }
+
+  #main {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+  }
+
+  #graph-wrap {
+    position: relative;
+    flex: 1;
+    min-width: 0;
+  }
+
+  #svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+    cursor: grab;
+    user-select: none;
+  }
+  #svg.dragging { cursor: grabbing; }
+
+  #drop {
+    position: absolute;
+    inset: 8px;
+    border: 2px dashed var(--good);
+    border-radius: 10px;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    color: var(--good);
+    background: #0b1220d5;
+    z-index: 20;
+  }
+  #drop.show { display: flex; }
+
+  #empty {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    color: var(--dim);
+    text-align: center;
+    padding: 24px;
+    pointer-events: none;
+  }
+  #empty.hidden { display: none; }
+
+  #toast {
+    position: absolute;
+    left: 50%;
+    bottom: 18px;
+    transform: translateX(-50%);
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    font-size: 11px;
+    padding: 9px 14px;
+    opacity: 0;
+    transition: opacity .2s;
+    pointer-events: none;
+  }
+  #toast.show { opacity: 1; }
+  #toast.ok { border-color: var(--good); color: var(--good); }
+  #toast.err { border-color: var(--bad); color: var(--bad); }
+
+  #settings {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    width: 340px;
+    max-width: calc(100% - 24px);
+    max-height: calc(100% - 24px);
+    border: 1px solid var(--line);
+    background: var(--panel);
+    border-radius: 10px;
+    z-index: 30;
+    transform: translateX(-120%);
+    transition: transform .2s;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    box-shadow: 0 10px 40px #00000055;
+  }
+  #settings.open { transform: translateX(0); }
+
+  #settings-head {
+    padding: 12px;
+    border-bottom: 1px solid var(--line);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  #settings-title {
+    flex: 1;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: .06em;
+  }
+
+  #settings-close {
+    background: transparent;
+    border: 0;
+    color: var(--dim);
+    font-size: 20px;
+    padding: 0;
+  }
+  #settings-close:hover { color: var(--text); }
+
+  #settings-body {
+    padding: 12px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .ctrl {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .ctrl-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 10px;
+    color: var(--dim);
+    text-transform: uppercase;
+    letter-spacing: .08em;
+  }
+
+  .ctrl-row {
+    display: grid;
+    grid-template-columns: 1fr 80px;
+    gap: 8px;
+  }
+
+  .ctrl input[type="range"] {
+    width: 100%;
+    accent-color: #1f8fff;
+  }
+
+  .ctrl input[type="number"] {
+    width: 100%;
+    padding: 6px 8px;
+  }
+
+  .settings-actions {
+    display: flex;
+    gap: 8px;
+  }
+
+  @media (max-width: 900px) {
+    #settings {
+      width: calc(100% - 24px);
+    }
+  }
+
+  #side {
+    width: 330px;
+    border-left: 1px solid var(--line);
+    background: var(--panel);
+    transform: translateX(100%);
+    transition: transform .2s;
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+  }
+  #side.open { transform: translateX(0); }
+
+  #side-head {
+    padding: 12px;
+    border-bottom: 1px solid var(--line);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  #badge {
+    font-size: 10px;
+    border: 1px solid var(--line);
+    padding: 3px 6px;
+    border-radius: 5px;
+    color: var(--topic);
+  }
+
+  #side-title {
+    flex: 1;
+    font-size: 12px;
+    font-weight: 700;
+    word-break: break-word;
+  }
+
+  #close { background: transparent; border: 0; color: var(--dim); font-size: 20px; padding: 0; }
+  #close:hover { color: var(--text); }
+
+  #side-body {
+    padding: 12px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .sec { display: flex; flex-direction: column; gap: 6px; }
+  .label { font-size: 10px; color: var(--dim); text-transform: uppercase; letter-spacing: .08em; }
+  .box {
+    font-size: 11px;
+    line-height: 1.5;
+    background: var(--panel-2);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: 8px 9px;
+    word-break: break-word;
+  }
+
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; }
+  .chip {
+    border: 1px solid var(--line);
+    background: var(--panel-2);
+    border-radius: 6px;
+    padding: 4px 8px;
+    font-size: 10px;
+    cursor: pointer;
+  }
+  .chip.pub { color: var(--good); border-color: #00c2a84d; }
+  .chip.sub { color: var(--info); border-color: #1f8fff4d; }
+
+  .edge { fill: none; stroke: #2a4368; stroke-width: 1.4; }
+  .edge.active { stroke: var(--good); stroke-width: 2.2; }
+  .edge.dim { opacity: .08; }
+
+  .node rect {
+    fill: #16243a;
+    stroke: #2a4368;
+    stroke-width: 1.3;
+    rx: 8;
+    ry: 8;
+  }
+  .node text { fill: var(--text); font-size: 10.5px; pointer-events: none; }
+  .node.topic rect { stroke: #8b6420; fill: #2a210f; }
+  .node.active rect { stroke: var(--info); stroke-width: 2; }
+  .node.dim { opacity: .15; }
+</style>
+</head>
+<body>
+  <div id="bar">
+    <div class="title">ROS2 GRAPH</div>
+    <div class="sep"></div>
+    <div class="stat"><b id="n-nodes">0</b> nodes</div>
+    <div class="stat"><b id="n-topics">0</b> topics</div>
+    <div class="stat"><b id="n-edges">0</b> edges</div>
+    <div class="spacer"></div>
+
+    <button id="upload">Upload JSON</button>
+    <input id="file-input" type="file" accept=".json,application/json">
+
+    <button id="toggle-settings">Settings</button>
+
+    <div class="sep"></div>
+    <div id="ws-dot"></div>
+    <input id="ws-url" value="ws://localhost:8765" spellcheck="false">
+    <button id="connect">Connect</button>
+  </div>
+
+  <div id="main">
+    <div id="graph-wrap">
+      <svg id="svg">
+        <defs>
+          <marker id="m-arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto" markerUnits="strokeWidth">
+            <path d="M0,0 L8,4 L0,8 Z" fill="#2a4368"></path>
+          </marker>
+          <marker id="m-arrow-active" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto" markerUnits="strokeWidth">
+            <path d="M0,0 L8,4 L0,8 Z" fill="#00c2a8"></path>
+          </marker>
+        </defs>
+        <g id="vp"></g>
+      </svg>
+
+      <div id="empty">
+        <div style="font-size:15px;color:#e6edf7">No graph loaded</div>
+        <div>Upload a communication JSON file or connect to the server.</div>
+      </div>
+
+      <div id="drop">Drop JSON here</div>
+      <div id="toast"></div>
+
+      <aside id="settings">
+        <div id="settings-head">
+          <div id="settings-title">SIMULATION SETTINGS</div>
+          <button id="settings-close">×</button>
+        </div>
+        <div id="settings-body">
+          <div class="ctrl">
+            <div class="ctrl-head"><span>Repulsion</span><span id="v-repulse">1250</span></div>
+            <div class="ctrl-row">
+              <input id="set-repulse-range" type="range" min="100" max="5000" step="50" value="1250">
+              <input id="set-repulse-number" type="number" min="100" max="5000" step="50" value="1250">
+            </div>
+          </div>
+
+          <div class="ctrl">
+            <div class="ctrl-head"><span>Spring Length</span><span id="v-spring-len">155</span></div>
+            <div class="ctrl-row">
+              <input id="set-spring-len-range" type="range" min="40" max="400" step="1" value="155">
+              <input id="set-spring-len-number" type="number" min="40" max="400" step="1" value="155">
+            </div>
+          </div>
+
+          <div class="ctrl">
+            <div class="ctrl-head"><span>Spring Strength</span><span id="v-spring-k">0.0040</span></div>
+            <div class="ctrl-row">
+              <input id="set-spring-k-range" type="range" min="0.0005" max="0.02" step="0.0001" value="0.004">
+              <input id="set-spring-k-number" type="number" min="0.0005" max="0.02" step="0.0001" value="0.004">
+            </div>
+          </div>
+
+          <div class="ctrl">
+            <div class="ctrl-head"><span>Centering</span><span id="v-center-k">0.0007</span></div>
+            <div class="ctrl-row">
+              <input id="set-center-k-range" type="range" min="0.0001" max="0.01" step="0.0001" value="0.0007">
+              <input id="set-center-k-number" type="number" min="0.0001" max="0.01" step="0.0001" value="0.0007">
+            </div>
+          </div>
+
+          <div class="ctrl">
+            <div class="ctrl-head"><span>Damping</span><span id="v-damping">0.900</span></div>
+            <div class="ctrl-row">
+              <input id="set-damping-range" type="range" min="0.50" max="0.99" step="0.01" value="0.9">
+              <input id="set-damping-number" type="number" min="0.50" max="0.99" step="0.01" value="0.9">
+            </div>
+          </div>
+
+          <div class="ctrl">
+            <div class="ctrl-head"><span>Edge Separation</span><span id="v-edge-offset">18</span></div>
+            <div class="ctrl-row">
+              <input id="set-edge-offset-range" type="range" min="0" max="60" step="1" value="18">
+              <input id="set-edge-offset-number" type="number" min="0" max="60" step="1" value="18">
+            </div>
+          </div>
+
+          <div class="settings-actions">
+            <button id="reset-settings" type="button">Reset Defaults</button>
+          </div>
+        </div>
+      </aside>
+    </div>
+
+    <aside id="side">
+      <div id="side-head">
+        <div id="badge">DETAIL</div>
+        <div id="side-title">-</div>
+        <button id="close">×</button>
+      </div>
+      <div id="side-body"></div>
+    </aside>
+  </div>
+
+<script>
+'use strict';
+
+const S = {
+  nodes: [],
+  edges: [],
+  topicDetails: {},
+  byId: new Map(),
+  inBy: new Map(),
+  outBy: new Map(),
+  selected: null,
+  ws: null,
+};
+
+const DEFAULTS = {
+  springLen: 155,
+  springK: 0.004,
+  repulse: 1250,
+  centerK: 0.0007,
+  damping: 0.9,
+  edgeOffset: 18,
+};
+
+const VIZ = { ...DEFAULTS };
+
+const svg = document.getElementById('svg');
+const vp = document.getElementById('vp');
+const side = document.getElementById('side');
+const sideTitle = document.getElementById('side-title');
+const sideBody = document.getElementById('side-body');
+const badge = document.getElementById('badge');
+const settingsPanel = document.getElementById('settings');
+const settingsToggle = document.getElementById('toggle-settings');
+
+let panX = 0;
+let panY = 0;
+let zoom = 1;
+let panStart = null;
+let isPanning = false;
+let dragNode = null;
+let sim = null;
+
+function toast(msg, kind = '') {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = `show ${kind}`.trim();
+  clearTimeout(t._tt);
+  t._tt = setTimeout(() => { t.className = ''; }, 3000);
+}
+
+function setWsState(state) {
+  const dot = document.getElementById('ws-dot');
+  const btn = document.getElementById('connect');
+  dot.className = state;
+  btn.textContent = state === 'ok' ? 'Disconnect' : state === 'connecting' ? 'Connecting...' : 'Connect';
+}
+
+function updateTransform() {
+  vp.setAttribute('transform', `translate(${panX},${panY}) scale(${zoom})`);
+}
+
+function toWorld(clientX, clientY) {
+  const r = svg.getBoundingClientRect();
+  return {
+    x: (clientX - r.left - panX) / zoom,
+    y: (clientY - r.top - panY) / zoom,
+  };
+}
+
+function esc(s) {
+  return String(s).replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;').replaceAll("'", '&#39;');
+}
+
+function sec(label, content) {
+  return `<div class="sec"><div class="label">${label}</div>${content}</div>`;
+}
+
+function shortTopic(topic) {
+  const tail = topic.split('/').pop() || topic;
+  return tail.length > 24 ? tail.slice(0, 22) + '..' : tail;
+}
+
+function resolveNodeId(node, topic, role, idx) {
+  const fallback = `${role}@${topic}#${idx}`;
+  if (!node || typeof node !== 'object') return fallback;
+  if (typeof node.name === 'string' && node.name.trim()) return node.name.trim();
+
+  if (typeof node.path === 'string' && node.path.trim()) {
+    const parts = node.path.replaceAll('\\\\', '/').split('/');
+    const file = parts[parts.length - 1] || '';
+    const stem = file.replace(/\.[^.]+$/, '');
+    if (stem) return stem;
+  }
+  return fallback;
+}
+
+function parseRaw(raw) {
+  const graphNodes = new Map();
+  const edges = [];
+  const details = {};
+
+  function ensure(id, data) {
+    if (!graphNodes.has(id)) graphNodes.set(id, data);
+    return graphNodes.get(id);
+  }
+
+  for (const [topic, info] of Object.entries(raw || {})) {
+    const pubsRaw = Array.isArray(info?.publisher) ? info.publisher : [];
+    const subsRaw = Array.isArray(info?.subscriber) ? info.subscriber : [];
+
+    const topicId = `topic:${topic}`;
+    ensure(topicId, { id: topicId, kind: 'topic', topic, name: topic });
+
+    const pubs = pubsRaw.map((p, i) => ({ ...p, _id: resolveNodeId(p, topic, 'pub', i) }));
+    const subs = subsRaw.map((s, i) => ({ ...s, _id: resolveNodeId(s, topic, 'sub', i) }));
+
+    for (const p of pubs) {
+      const nodeId = `node:${p._id}`;
+      ensure(nodeId, { id: nodeId, kind: 'node', name: p._id, path: p.path || '' });
+
+      let msgType = '';
+      let qos = '';
+      for (const pubDef of (p.publishers || [])) {
+        if (pubDef.topic === topic) {
+          msgType = pubDef.msg_type || '';
+          qos = pubDef.qos_service_profile || '';
+          break;
+        }
+      }
+
+      edges.push({
+        id: `e:${edges.length}`,
+        from: nodeId,
+        to: topicId,
+        topic,
+        dir: 'pub',
+        msg_type: msgType,
+        qos,
+        callback: '',
+      });
+    }
+
+    for (const s of subs) {
+      const nodeId = `node:${s._id}`;
+      ensure(nodeId, { id: nodeId, kind: 'node', name: s._id, path: s.path || '' });
+
+      let msgType = '';
+      let qos = '';
+      let callback = '';
+      for (const subDef of (s.subscriptions || [])) {
+        if (subDef.topic === topic) {
+          msgType = subDef.msg_type || '';
+          qos = subDef.qos_service_profile || '';
+          callback = subDef.callback || '';
+          break;
+        }
+      }
+
+      edges.push({
+        id: `e:${edges.length}`,
+        from: topicId,
+        to: nodeId,
+        topic,
+        dir: 'sub',
+        msg_type: msgType,
+        qos,
+        callback,
+      });
+    }
+
+    details[topic] = {
+      publishers: pubs.map(p => p._id),
+      subscribers: subs.map(s => s._id),
+    };
+  }
+
+  return {
+    nodes: Array.from(graphNodes.values()),
+    edges,
+    topicDetails: details,
+  };
+}
+
+function parseInput(obj) {
+  if (obj && Array.isArray(obj.nodes) && Array.isArray(obj.edges)) {
+    const nodes = obj.nodes.map(n => ({
+      id: String(n.id),
+      kind: n.kind || (String(n.id).startsWith('topic:') ? 'topic' : 'node'),
+      topic: n.topic || (String(n.id).startsWith('topic:') ? String(n.id).slice(6) : ''),
+      name: n.name || String(n.id),
+      path: n.path || '',
+    }));
+
+    const edges = obj.edges.map((e, i) => ({
+      id: e.id || `e:${i}`,
+      from: String(e.from),
+      to: String(e.to),
+      topic: e.topic || '',
+      dir: e.dir || 'pub',
+      msg_type: e.msg_type || '',
+      qos: e.qos || e.qos_service_profile || '',
+      callback: e.callback || '',
+    }));
+
+    return { nodes, edges, topicDetails: obj.topic_details || obj.topicDetails || {} };
+  }
+  return parseRaw(obj);
+}
+
+function buildGraph(g) {
+  stopSim();
+  S.nodes = g.nodes || [];
+  S.edges = g.edges || [];
+  S.topicDetails = g.topicDetails || {};
+  S.byId = new Map(S.nodes.map(n => [n.id, n]));
+
+  S.edges = S.edges.filter(e => S.byId.has(e.from) && S.byId.has(e.to));
+
+  S.inBy = new Map();
+  S.outBy = new Map();
+  for (const n of S.nodes) {
+    S.inBy.set(n.id, []);
+    S.outBy.set(n.id, []);
+  }
+  for (const e of S.edges) {
+    S.outBy.get(e.from).push(e);
+    S.inBy.get(e.to).push(e);
+  }
+
+  const W = svg.clientWidth || 1200;
+  const H = svg.clientHeight || 800;
+  const cx = W / 2;
+  const cy = H / 2;
+
+  const topics = S.nodes.filter(n => n.kind === 'topic');
+  const apps = S.nodes.filter(n => n.kind !== 'topic');
+
+  topics.forEach((n, i) => {
+    const a = (i / Math.max(1, topics.length)) * Math.PI * 2;
+    n.x = cx + Math.cos(a) * Math.min(W, H) * 0.2;
+    n.y = cy + Math.sin(a) * Math.min(W, H) * 0.2;
+    n.vx = 0; n.vy = 0;
+  });
+
+  apps.forEach((n, i) => {
+    const a = (i / Math.max(1, apps.length)) * Math.PI * 2;
+    n.x = cx + Math.cos(a) * Math.min(W, H) * 0.38;
+    n.y = cy + Math.sin(a) * Math.min(W, H) * 0.38;
+    n.vx = 0; n.vy = 0;
+  });
+
+  render();
+  startSim();
+
+  document.getElementById('n-nodes').textContent = String(apps.length);
+  document.getElementById('n-topics').textContent = String(topics.length);
+  document.getElementById('n-edges').textContent = String(S.edges.length);
+  document.getElementById('empty').classList.toggle('hidden', S.nodes.length > 0);
+
+  clearSelect();
+}
+
+function render() {
+  vp.innerHTML = '';
+
+  const pairCount = new Map();
+  const pairIdx = new Map();
+  for (const e of S.edges) {
+    const k = [e.from, e.to].sort().join('::');
+    pairCount.set(k, (pairCount.get(k) || 0) + 1);
+  }
+  for (const e of S.edges) {
+    const k = [e.from, e.to].sort().join('::');
+    const i = pairIdx.get(k) || 0;
+    pairIdx.set(k, i + 1);
+    e._pairIdx = i;
+    e._pairTot = pairCount.get(k) || 1;
+  }
+
+  const gEdges = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+  gEdges.id = 'edges';
+
+  for (const e of S.edges) {
+    const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+    g.dataset.edgeId = e.id;
+
+    const p = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    p.setAttribute('class', 'edge');
+    p.setAttribute('marker-end', 'url(#m-arrow)');
+
+    const txt = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+    txt.setAttribute('fill', '#8fa2bd');
+    txt.setAttribute('font-size', '9');
+    txt.textContent = shortTopic(e.topic);
+
+    g.appendChild(p);
+    g.appendChild(txt);
+    gEdges.appendChild(g);
+
+    g.addEventListener('click', ev => {
+      ev.stopPropagation();
+      showTopic(e.topic);
+    });
+
+    e._path = p;
+    e._label = txt;
+    e._group = g;
+  }
+
+  const gNodes = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+  gNodes.id = 'nodes';
+
+  for (const n of S.nodes) {
+    const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+    g.setAttribute('class', `node ${n.kind === 'topic' ? 'topic' : ''}`.trim());
+    g.dataset.nodeId = n.id;
+
+    const label = n.kind === 'topic' ? shortTopic(n.topic || n.name) : n.name;
+    const w = n.kind === 'topic' ? Math.max(140, label.length * 6.5 + 26) : Math.max(96, label.length * 7 + 24);
+    const h = n.kind === 'topic' ? 34 : 30;
+    n._w = w;
+    n._h = h;
+
+    const rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+    rect.setAttribute('x', String(-w / 2));
+    rect.setAttribute('y', String(-h / 2));
+    rect.setAttribute('width', String(w));
+    rect.setAttribute('height', String(h));
+
+    const txt = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+    txt.setAttribute('x', String(-w / 2 + 10));
+    txt.setAttribute('y', '4');
+    txt.textContent = label;
+
+    g.appendChild(rect);
+    g.appendChild(txt);
+    gNodes.appendChild(g);
+
+    g.addEventListener('click', ev => {
+      ev.stopPropagation();
+      selectNode(n.id);
+      if (n.kind === 'topic') showTopic(n.topic || n.name);
+      else showNode(n.name);
+    });
+
+    g.addEventListener('pointerdown', ev => {
+      ev.stopPropagation();
+      dragNode = { id: n.id, ptr: ev.pointerId };
+      g.setPointerCapture(ev.pointerId);
+      const p = toWorld(ev.clientX, ev.clientY);
+      n.x = p.x; n.y = p.y; n.vx = 0; n.vy = 0;
+      renderPositions();
+    });
+
+    g.addEventListener('pointermove', ev => {
+      if (!dragNode || dragNode.id !== n.id || dragNode.ptr !== ev.pointerId) return;
+      const p = toWorld(ev.clientX, ev.clientY);
+      n.x = p.x; n.y = p.y; n.vx = 0; n.vy = 0;
+      renderPositions();
+    });
+
+    g.addEventListener('pointerup', ev => {
+      if (dragNode && dragNode.id === n.id && dragNode.ptr === ev.pointerId) {
+        dragNode = null;
+        g.releasePointerCapture(ev.pointerId);
+      }
+    });
+
+    n._el = g;
+  }
+
+  vp.appendChild(gEdges);
+  vp.appendChild(gNodes);
+  renderPositions();
+}
+
+function renderPositions() {
+  for (const n of S.nodes) {
+    if (!n._el) continue;
+    n._el.setAttribute('transform', `translate(${n.x.toFixed(2)},${n.y.toFixed(2)})`);
+  }
+
+  for (const e of S.edges) {
+    const a = S.byId.get(e.from);
+    const b = S.byId.get(e.to);
+    if (!a || !b || !e._path) continue;
+
+    let dx = b.x - a.x;
+    let dy = b.y - a.y;
+    const d = Math.max(1e-6, Math.hypot(dx, dy));
+    dx /= d;
+    dy /= d;
+
+    const sa = Math.max(a._h / 2, 14);
+    const sb = Math.max(b._h / 2, 14);
+
+    const x1 = a.x + dx * sa;
+    const y1 = a.y + dy * sa;
+    const x2 = b.x - dx * sb;
+    const y2 = b.y - dy * sb;
+
+    const off = e._pairTot > 1 ? (e._pairIdx - (e._pairTot - 1) / 2) * VIZ.edgeOffset : 0;
+    const mx = (x1 + x2) / 2 - dy * off;
+    const my = (y1 + y2) / 2 + dx * off;
+
+    e._path.setAttribute('d', `M ${x1} ${y1} Q ${mx} ${my} ${x2} ${y2}`);
+    e._path.setAttribute('marker-end', e._active ? 'url(#m-arrow-active)' : 'url(#m-arrow)');
+
+    if (e._label) {
+      const lx = (x1 + 2 * mx + x2) / 4;
+      const ly = (y1 + 2 * my + y2) / 4 - 4;
+      e._label.setAttribute('x', String(lx));
+      e._label.setAttribute('y', String(ly));
+    }
+  }
+}
+
+function startSim() {
+  stopSim();
+
+  sim = setInterval(() => {
+    if (!S.nodes.length) return;
+
+    const W = svg.clientWidth || 1200;
+    const H = svg.clientHeight || 800;
+    const cx = W / 2;
+    const cy = H / 2;
+
+    for (let i = 0; i < S.nodes.length; i += 1) {
+      const a = S.nodes[i];
+      for (let j = i + 1; j < S.nodes.length; j += 1) {
+        const b = S.nodes[j];
+        let dx = b.x - a.x;
+        let dy = b.y - a.y;
+        let d2 = dx * dx + dy * dy;
+        if (d2 < 1) d2 = 1;
+        const f = VIZ.repulse / d2;
+        const d = Math.sqrt(d2);
+        dx /= d; dy /= d;
+        a.vx -= dx * f;
+        a.vy -= dy * f;
+        b.vx += dx * f;
+        b.vy += dy * f;
+      }
+    }
+
+    for (const e of S.edges) {
+      const a = S.byId.get(e.from);
+      const b = S.byId.get(e.to);
+      if (!a || !b) continue;
+      let dx = b.x - a.x;
+      let dy = b.y - a.y;
+      let d = Math.hypot(dx, dy);
+      if (d < 1) d = 1;
+      const ext = d - VIZ.springLen;
+      const f = VIZ.springK * ext;
+      dx /= d; dy /= d;
+      a.vx += dx * f;
+      a.vy += dy * f;
+      b.vx -= dx * f;
+      b.vy -= dy * f;
+    }
+
+    for (const n of S.nodes) {
+      n.vx += (cx - n.x) * VIZ.centerK;
+      n.vy += (cy - n.y) * VIZ.centerK;
+    }
+
+    for (const n of S.nodes) {
+      if (dragNode && dragNode.id === n.id) continue;
+      n.vx *= VIZ.damping;
+      n.vy *= VIZ.damping;
+      n.x += n.vx;
+      n.y += n.vy;
+    }
+
+    renderPositions();
+  }, 16);
+}
+
+function stopSim() {
+  if (sim) {
+    clearInterval(sim);
+    sim = null;
+  }
+}
+
+function clearSelect() {
+  S.selected = null;
+  for (const n of S.nodes) {
+    if (!n._el) continue;
+    n._el.classList.remove('active', 'dim');
+  }
+  for (const e of S.edges) {
+    e._active = false;
+    if (!e._path) continue;
+    e._path.classList.remove('active', 'dim');
+  }
+  renderPositions();
+  side.classList.remove('open');
+}
+
+function selectNode(id) {
+  S.selected = id;
+  const edgeSet = new Set();
+  const nodeSet = new Set([id]);
+
+  for (const e of S.edges) {
+    if (e.from === id || e.to === id) {
+      edgeSet.add(e.id);
+      nodeSet.add(e.from);
+      nodeSet.add(e.to);
+    }
+  }
+
+  for (const n of S.nodes) {
+    if (!n._el) continue;
+    n._el.classList.toggle('active', n.id === id);
+    n._el.classList.toggle('dim', !nodeSet.has(n.id));
+  }
+
+  for (const e of S.edges) {
+    const on = edgeSet.has(e.id);
+    e._active = on;
+    if (!e._path) continue;
+    e._path.classList.toggle('active', on);
+    e._path.classList.toggle('dim', !on);
+  }
+
+  renderPositions();
+}
+
+function showTopic(topic) {
+  const d = S.topicDetails[topic] || { publishers: [], subscribers: [] };
+  badge.textContent = 'TOPIC';
+  sideTitle.textContent = topic;
+
+  let html = '';
+  html += sec('Topic', `<div class="box">${esc(topic)}</div>`);
+  html += sec(`Publishers (${d.publishers.length || 0})`, (d.publishers || []).length
+    ? `<div class="chips">${d.publishers.map(x => `<span class="chip pub" data-node="${esc(x)}">${esc(x)}</span>`).join('')}</div>`
+    : '<div class="box">none</div>');
+  html += sec(`Subscribers (${d.subscribers.length || 0})`, (d.subscribers || []).length
+    ? `<div class="chips">${d.subscribers.map(x => `<span class="chip sub" data-node="${esc(x)}">${esc(x)}</span>`).join('')}</div>`
+    : '<div class="box">none</div>');
+
+  sideBody.innerHTML = html;
+  side.classList.add('open');
+  wirePanel();
+}
+
+function showNode(name) {
+  const id = `node:${name}`;
+  const out = (S.outBy.get(id) || []).filter(e => e.dir === 'pub').map(e => e.topic);
+  const inn = (S.inBy.get(id) || []).filter(e => e.dir === 'sub').map(e => e.topic);
+
+  const uniqOut = Array.from(new Set(out)).sort();
+  const uniqIn = Array.from(new Set(inn)).sort();
+
+  badge.textContent = 'NODE';
+  sideTitle.textContent = name;
+
+  let html = '';
+  html += sec('Summary', `<div class="box">${uniqOut.length} publishes · ${uniqIn.length} subscribes</div>`);
+  html += sec(`Publishes (${uniqOut.length})`, uniqOut.length
+    ? `<div class="chips">${uniqOut.map(t => `<span class="chip pub" data-topic="${esc(t)}">${esc(shortTopic(t))}</span>`).join('')}</div>`
+    : '<div class="box">none</div>');
+  html += sec(`Subscribes (${uniqIn.length})`, uniqIn.length
+    ? `<div class="chips">${uniqIn.map(t => `<span class="chip sub" data-topic="${esc(t)}">${esc(shortTopic(t))}</span>`).join('')}</div>`
+    : '<div class="box">none</div>');
+
+  const n = S.byId.get(id);
+  if (n?.path) html += sec('Path', `<div class="box">${esc(n.path)}</div>`);
+
+  sideBody.innerHTML = html;
+  side.classList.add('open');
+  wirePanel();
+}
+
+function wirePanel() {
+  sideBody.querySelectorAll('[data-topic]').forEach(el => {
+    el.addEventListener('click', () => showTopic(el.getAttribute('data-topic')));
+  });
+
+  sideBody.querySelectorAll('[data-node]').forEach(el => {
+    el.addEventListener('click', () => {
+      const name = el.getAttribute('data-node');
+      const id = `node:${name}`;
+      if (S.byId.has(id)) {
+        selectNode(id);
+        showNode(name);
+      }
+    });
+  });
+}
+
+function setSettingsOpen(open) {
+  settingsPanel.classList.toggle('open', open);
+  settingsToggle.classList.toggle('active', open);
+}
+
+function clampNum(v, min, max) {
+  return Math.max(min, Math.min(max, v));
+}
+
+function bindSetting(cfg) {
+  const range = document.getElementById(cfg.rangeId);
+  const number = document.getElementById(cfg.numberId);
+  const valueLabel = document.getElementById(cfg.valueId);
+
+  function setRaw(value, source) {
+    const parsed = Number(value);
+    const v = clampNum(Number.isFinite(parsed) ? parsed : cfg.defaultValue, cfg.min, cfg.max);
+    VIZ[cfg.key] = v;
+
+    if (source !== 'range') range.value = String(v);
+    if (source !== 'number') number.value = String(v);
+    valueLabel.textContent = cfg.format(v);
+
+    if (cfg.rebuild) {
+      renderPositions();
+    }
+  }
+
+  range.addEventListener('input', () => setRaw(range.value, 'range'));
+  number.addEventListener('input', () => setRaw(number.value, 'number'));
+  setRaw(cfg.defaultValue, 'init');
+}
+
+function wireSettings() {
+  bindSetting({
+    key: 'repulse',
+    rangeId: 'set-repulse-range',
+    numberId: 'set-repulse-number',
+    valueId: 'v-repulse',
+    min: 100,
+    max: 5000,
+    defaultValue: DEFAULTS.repulse,
+    format: (v) => Math.round(v).toString(),
+    rebuild: false,
+  });
+
+  bindSetting({
+    key: 'springLen',
+    rangeId: 'set-spring-len-range',
+    numberId: 'set-spring-len-number',
+    valueId: 'v-spring-len',
+    min: 40,
+    max: 400,
+    defaultValue: DEFAULTS.springLen,
+    format: (v) => Math.round(v).toString(),
+    rebuild: false,
+  });
+
+  bindSetting({
+    key: 'springK',
+    rangeId: 'set-spring-k-range',
+    numberId: 'set-spring-k-number',
+    valueId: 'v-spring-k',
+    min: 0.0005,
+    max: 0.02,
+    defaultValue: DEFAULTS.springK,
+    format: (v) => v.toFixed(4),
+    rebuild: false,
+  });
+
+  bindSetting({
+    key: 'centerK',
+    rangeId: 'set-center-k-range',
+    numberId: 'set-center-k-number',
+    valueId: 'v-center-k',
+    min: 0.0001,
+    max: 0.01,
+    defaultValue: DEFAULTS.centerK,
+    format: (v) => v.toFixed(4),
+    rebuild: false,
+  });
+
+  bindSetting({
+    key: 'damping',
+    rangeId: 'set-damping-range',
+    numberId: 'set-damping-number',
+    valueId: 'v-damping',
+    min: 0.5,
+    max: 0.99,
+    defaultValue: DEFAULTS.damping,
+    format: (v) => v.toFixed(3),
+    rebuild: false,
+  });
+
+  bindSetting({
+    key: 'edgeOffset',
+    rangeId: 'set-edge-offset-range',
+    numberId: 'set-edge-offset-number',
+    valueId: 'v-edge-offset',
+    min: 0,
+    max: 60,
+    defaultValue: DEFAULTS.edgeOffset,
+    format: (v) => Math.round(v).toString(),
+    rebuild: true,
+  });
+
+  settingsToggle.addEventListener('click', () => {
+    setSettingsOpen(!settingsPanel.classList.contains('open'));
+  });
+
+  document.getElementById('settings-close').addEventListener('click', () => {
+    setSettingsOpen(false);
+  });
+
+  document.getElementById('reset-settings').addEventListener('click', () => {
+    document.getElementById('set-repulse-range').value = String(DEFAULTS.repulse);
+    document.getElementById('set-spring-len-range').value = String(DEFAULTS.springLen);
+    document.getElementById('set-spring-k-range').value = String(DEFAULTS.springK);
+    document.getElementById('set-center-k-range').value = String(DEFAULTS.centerK);
+    document.getElementById('set-damping-range').value = String(DEFAULTS.damping);
+    document.getElementById('set-edge-offset-range').value = String(DEFAULTS.edgeOffset);
+
+    document.getElementById('set-repulse-range').dispatchEvent(new Event('input'));
+    document.getElementById('set-spring-len-range').dispatchEvent(new Event('input'));
+    document.getElementById('set-spring-k-range').dispatchEvent(new Event('input'));
+    document.getElementById('set-center-k-range').dispatchEvent(new Event('input'));
+    document.getElementById('set-damping-range').dispatchEvent(new Event('input'));
+    document.getElementById('set-edge-offset-range').dispatchEvent(new Event('input'));
+
+    toast('Settings reset to defaults', 'ok');
+  });
+}
+
+svg.addEventListener('wheel', ev => {
+  ev.preventDefault();
+  const before = toWorld(ev.clientX, ev.clientY);
+  const factor = ev.deltaY > 0 ? 0.9 : 1.1;
+  const next = Math.max(0.2, Math.min(4, zoom * factor));
+
+  const r = svg.getBoundingClientRect();
+  panX = ev.clientX - r.left - before.x * next;
+  panY = ev.clientY - r.top - before.y * next;
+  zoom = next;
+  updateTransform();
+}, { passive: false });
+
+svg.addEventListener('pointerdown', ev => {
+  if (ev.target.closest('.node')) return;
+  isPanning = true;
+  panStart = { x: ev.clientX, y: ev.clientY, px: panX, py: panY };
+  svg.classList.add('dragging');
+});
+
+window.addEventListener('pointermove', ev => {
+  if (!isPanning || !panStart) return;
+  panX = panStart.px + (ev.clientX - panStart.x);
+  panY = panStart.py + (ev.clientY - panStart.y);
+  updateTransform();
+});
+
+window.addEventListener('pointerup', () => {
+  isPanning = false;
+  panStart = null;
+  svg.classList.remove('dragging');
+});
+
+svg.addEventListener('click', ev => {
+  if (ev.target.closest('.node') || ev.target.closest('.edge')) return;
+  clearSelect();
+});
+
+function loadText(text, source = 'input') {
+  try {
+    const raw = JSON.parse(text);
+    const g = parseInput(raw);
+    buildGraph(g);
+    toast(`Loaded ${g.nodes.length} nodes from ${source}`, 'ok');
+  } catch (err) {
+    toast(`JSON parse error: ${err.message}`, 'err');
+  }
+}
+
+function loadFile(file) {
+  if (!file) return;
+  const r = new FileReader();
+  r.onload = () => loadText(r.result, file.name);
+  r.readAsText(file);
+}
+
+document.getElementById('upload').addEventListener('click', () => {
+  document.getElementById('file-input').click();
+});
+
+document.getElementById('file-input').addEventListener('change', ev => {
+  loadFile(ev.target.files[0]);
+  ev.target.value = '';
+});
+
+let dragDepth = 0;
+const drop = document.getElementById('drop');
+window.addEventListener('dragenter', ev => {
+  if (!ev.dataTransfer?.types?.includes('Files')) return;
+  dragDepth += 1;
+  drop.classList.add('show');
+});
+window.addEventListener('dragleave', () => {
+  dragDepth -= 1;
+  if (dragDepth <= 0) {
+    dragDepth = 0;
+    drop.classList.remove('show');
+  }
+});
+window.addEventListener('dragover', ev => ev.preventDefault());
+window.addEventListener('drop', ev => {
+  ev.preventDefault();
+  dragDepth = 0;
+  drop.classList.remove('show');
+  loadFile(ev.dataTransfer?.files?.[0]);
+});
+
+function connectWs() {
+  if (S.ws && (S.ws.readyState === WebSocket.OPEN || S.ws.readyState === WebSocket.CONNECTING)) {
+    S.ws.close();
+    return;
+  }
+
+  const url = document.getElementById('ws-url').value.trim();
+  if (!url) return;
+
+  setWsState('connecting');
+  try {
+    S.ws = new WebSocket(url);
+  } catch {
+    setWsState('err');
+    toast('Invalid WebSocket URL', 'err');
+    return;
+  }
+
+  S.ws.onopen = () => { setWsState('ok'); toast('Connected', 'ok'); };
+  S.ws.onerror = () => { setWsState('err'); toast('WebSocket error', 'err'); };
+  S.ws.onclose = () => { setWsState(''); };
+
+  S.ws.onmessage = ev => {
+    try {
+      const raw = JSON.parse(ev.data);
+      const g = parseInput(raw);
+      buildGraph(g);
+      toast(`Live update: ${g.edges.length} edges`, 'ok');
+    } catch (err) {
+      toast(`Invalid live payload: ${err.message}`, 'err');
+    }
+  };
+}
+
+document.getElementById('connect').addEventListener('click', connectWs);
+
+document.getElementById('close').addEventListener('click', clearSelect);
+
+async function tryInitialFetch() {
+  const urls = [];
+  if (location.protocol.startsWith('http')) urls.push(`${location.origin}/data`);
+  urls.push('http://localhost:8766/data');
+
+  for (const u of urls) {
+    try {
+      const r = await fetch(u, { cache: 'no-store' });
+      if (r.status === 204 || !r.ok) continue;
+      const text = await r.text();
+      loadText(text, u);
+      return;
+    } catch {
+      // Try next endpoint.
+    }
+  }
+}
+
+updateTransform();
+wireSettings();
+tryInitialFetch();
+</script>
+</body>
+</html>

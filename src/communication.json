@@ -1,0 +1,4607 @@
+{
+  "/visualize/rviz/viewpoints": {
+    "publisher": [
+      {
+        "name": "visualizer_rviz",
+        "path": "/home/jan/ros2_ws/src/quad-trajectory-execution-ros2/quad_trajectory_execution/quad_trajectory_execution/visualizers/visualizer_rviz.py",
+        "subscriptions": [],
+        "publishers": [
+          {
+            "msg_type": "Marker",
+            "topic": "/visualize/rviz/viewpoints",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Marker",
+            "topic": "/visualize/rviz/pois",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Marker",
+            "topic": "/visualize/rviz/static_obstacles",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Marker",
+            "topic": "/visualize/rviz/flight_area",
+            "qos_service_profile": "5"
+          }
+        ]
+      }
+    ],
+    "subscriber": []
+  },
+  "/visualize/rviz/pois": {
+    "publisher": [
+      {
+        "name": "visualizer_rviz",
+        "path": "/home/jan/ros2_ws/src/quad-trajectory-execution-ros2/quad_trajectory_execution/quad_trajectory_execution/visualizers/visualizer_rviz.py",
+        "subscriptions": [],
+        "publishers": [
+          {
+            "msg_type": "Marker",
+            "topic": "/visualize/rviz/viewpoints",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Marker",
+            "topic": "/visualize/rviz/pois",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Marker",
+            "topic": "/visualize/rviz/static_obstacles",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Marker",
+            "topic": "/visualize/rviz/flight_area",
+            "qos_service_profile": "5"
+          }
+        ]
+      }
+    ],
+    "subscriber": []
+  },
+  "/visualize/rviz/static_obstacles": {
+    "publisher": [
+      {
+        "name": "visualizer_rviz",
+        "path": "/home/jan/ros2_ws/src/quad-trajectory-execution-ros2/quad_trajectory_execution/quad_trajectory_execution/visualizers/visualizer_rviz.py",
+        "subscriptions": [],
+        "publishers": [
+          {
+            "msg_type": "Marker",
+            "topic": "/visualize/rviz/viewpoints",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Marker",
+            "topic": "/visualize/rviz/pois",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Marker",
+            "topic": "/visualize/rviz/static_obstacles",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Marker",
+            "topic": "/visualize/rviz/flight_area",
+            "qos_service_profile": "5"
+          }
+        ]
+      }
+    ],
+    "subscriber": []
+  },
+  "/visualize/rviz/flight_area": {
+    "publisher": [
+      {
+        "name": "visualizer_rviz",
+        "path": "/home/jan/ros2_ws/src/quad-trajectory-execution-ros2/quad_trajectory_execution/quad_trajectory_execution/visualizers/visualizer_rviz.py",
+        "subscriptions": [],
+        "publishers": [
+          {
+            "msg_type": "Marker",
+            "topic": "/visualize/rviz/viewpoints",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Marker",
+            "topic": "/visualize/rviz/pois",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Marker",
+            "topic": "/visualize/rviz/static_obstacles",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Marker",
+            "topic": "/visualize/rviz/flight_area",
+            "qos_service_profile": "5"
+          }
+        ]
+      }
+    ],
+    "subscriber": []
+  },
+  "/visualize/rviz/trajectory": {
+    "publisher": [
+      {
+        "name": "visualizer_rviz_trajectory",
+        "path": "/home/jan/ros2_ws/src/quad-trajectory-execution-ros2/quad_trajectory_execution/quad_trajectory_execution/visualizers/visualizer_rviz_trajectory.py",
+        "subscriptions": [],
+        "publishers": [
+          {
+            "msg_type": "Marker",
+            "topic": "/visualize/rviz/trajectory",
+            "qos_service_profile": "5"
+          }
+        ]
+      }
+    ],
+    "subscriber": []
+  },
+  "/tf": {
+    "publisher": [],
+    "subscriber": [
+      {
+        "name": "flight_logger",
+        "path": "/home/jan/ros2_ws/src/quad-trajectory-execution-ros2/quad_trajectory_execution/quad_trajectory_execution/logger/flight_logger.py",
+        "subscriptions": [
+          {
+            "msg_type": "TFMessage",
+            "topic": "/tf",
+            "callback": "self.update_positions",
+            "qos_service_profile": "1"
+          }
+        ],
+        "publishers": []
+      },
+      {
+        "name": "flight_logger_new",
+        "path": "/home/jan/ros2_ws/src/quad-trajectory-execution-ros2/quad_trajectory_execution/quad_trajectory_execution/logger/flight_logger_new.py",
+        "subscriptions": [
+          {
+            "msg_type": "Takeoff",
+            "topic": "/takeoff_action/goal",
+            "callback": "self.start",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Land",
+            "topic": "/land_action/result",
+            "callback": "self.end",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "TFMessage",
+            "topic": "/tf",
+            "callback": "self.update_positions",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "TwistStamped",
+            "topic": "/quad/cmd_vel",
+            "callback": "self.update_target_velocities",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "ControlSystemState",
+            "topic": "/quad/current_vel",
+            "callback": "self.update_current_velocities",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Pose",
+            "topic": "/quad/gui/homepoint",
+            "callback": "self.update_homepoint",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Float64",
+            "topic": "/quad/ned_yaw_offset_dynamic",
+            "callback": "self.update_ned_yaw_offset_dynamic",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Float64",
+            "topic": "/quad/ned_yaw_offset_takeoff",
+            "callback": "self.update_ned_yaw_offset_takeoff",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "PoseWithCovarianceStamped",
+            "topic": "/quad/estimated_pose",
+            "callback": "self.update_estimated_pose",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "FlyToPos",
+            "topic": "/fly_to_action/goal",
+            "callback": "self.handle_goal_update",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Mavlink",
+            "topic": "/mavlink/from",
+            "callback": "self.mavlink_callback",
+            "qos_service_profile": "10"
+          }
+        ],
+        "publishers": []
+      },
+      {
+        "name": "watch_dog_camera_tracking",
+        "path": "/home/jan/ros2_ws/src/quad-trajectory-execution-ros2/quad_trajectory_execution/quad_trajectory_execution/watch_dogs/watch_dog_camera_tracking.py",
+        "subscriptions": [
+          {
+            "msg_type": "TFMessage",
+            "topic": "/tf",
+            "callback": "self.tf_callback",
+            "qos_service_profile": "1"
+          }
+        ],
+        "publishers": []
+      },
+      {
+        "name": "mission_control",
+        "path": "/home/jan/ros2_ws/src/quad-trajectory-execution-ros2/quad_trajectory_execution/quad_trajectory_execution/mission_execution/mission_control.py",
+        "subscriptions": [
+          {
+            "msg_type": "TFMessage",
+            "topic": "/tf",
+            "callback": "self.update_distance_memory",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "GimbalDeviceAttitudeStatus",
+            "topic": "/quad/gimbal_attitude",
+            "callback": "self.gimbal_callback",
+            "qos_service_profile": "10"
+          }
+        ],
+        "publishers": [
+          {
+            "msg_type": "String",
+            "topic": "/quad/gui/state",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "TrajectoryPoint",
+            "topic": "/quad/gui/homepoint",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Float64",
+            "topic": "/quad/gui/distance_timer",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Float64",
+            "topic": "/quad/gui/inspection_timer",
+            "qos_service_profile": "10"
+          }
+        ]
+      }
+    ]
+  },
+  "/takeoff_action/goal": {
+    "publisher": [],
+    "subscriber": [
+      {
+        "name": "flight_logger_new",
+        "path": "/home/jan/ros2_ws/src/quad-trajectory-execution-ros2/quad_trajectory_execution/quad_trajectory_execution/logger/flight_logger_new.py",
+        "subscriptions": [
+          {
+            "msg_type": "Takeoff",
+            "topic": "/takeoff_action/goal",
+            "callback": "self.start",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Land",
+            "topic": "/land_action/result",
+            "callback": "self.end",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "TFMessage",
+            "topic": "/tf",
+            "callback": "self.update_positions",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "TwistStamped",
+            "topic": "/quad/cmd_vel",
+            "callback": "self.update_target_velocities",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "ControlSystemState",
+            "topic": "/quad/current_vel",
+            "callback": "self.update_current_velocities",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Pose",
+            "topic": "/quad/gui/homepoint",
+            "callback": "self.update_homepoint",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Float64",
+            "topic": "/quad/ned_yaw_offset_dynamic",
+            "callback": "self.update_ned_yaw_offset_dynamic",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Float64",
+            "topic": "/quad/ned_yaw_offset_takeoff",
+            "callback": "self.update_ned_yaw_offset_takeoff",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "PoseWithCovarianceStamped",
+            "topic": "/quad/estimated_pose",
+            "callback": "self.update_estimated_pose",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "FlyToPos",
+            "topic": "/fly_to_action/goal",
+            "callback": "self.handle_goal_update",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Mavlink",
+            "topic": "/mavlink/from",
+            "callback": "self.mavlink_callback",
+            "qos_service_profile": "10"
+          }
+        ],
+        "publishers": []
+      }
+    ]
+  },
+  "/land_action/result": {
+    "publisher": [],
+    "subscriber": [
+      {
+        "name": "flight_logger_new",
+        "path": "/home/jan/ros2_ws/src/quad-trajectory-execution-ros2/quad_trajectory_execution/quad_trajectory_execution/logger/flight_logger_new.py",
+        "subscriptions": [
+          {
+            "msg_type": "Takeoff",
+            "topic": "/takeoff_action/goal",
+            "callback": "self.start",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Land",
+            "topic": "/land_action/result",
+            "callback": "self.end",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "TFMessage",
+            "topic": "/tf",
+            "callback": "self.update_positions",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "TwistStamped",
+            "topic": "/quad/cmd_vel",
+            "callback": "self.update_target_velocities",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "ControlSystemState",
+            "topic": "/quad/current_vel",
+            "callback": "self.update_current_velocities",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Pose",
+            "topic": "/quad/gui/homepoint",
+            "callback": "self.update_homepoint",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Float64",
+            "topic": "/quad/ned_yaw_offset_dynamic",
+            "callback": "self.update_ned_yaw_offset_dynamic",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Float64",
+            "topic": "/quad/ned_yaw_offset_takeoff",
+            "callback": "self.update_ned_yaw_offset_takeoff",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "PoseWithCovarianceStamped",
+            "topic": "/quad/estimated_pose",
+            "callback": "self.update_estimated_pose",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "FlyToPos",
+            "topic": "/fly_to_action/goal",
+            "callback": "self.handle_goal_update",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Mavlink",
+            "topic": "/mavlink/from",
+            "callback": "self.mavlink_callback",
+            "qos_service_profile": "10"
+          }
+        ],
+        "publishers": []
+      }
+    ]
+  },
+  "/quad/cmd_vel": {
+    "publisher": [
+      {
+        "name": "collision_prevention",
+        "path": "/home/jan/ros2_ws/src/quad-trajectory-execution-ros2/quad_trajectory_execution/quad_trajectory_execution/obstacle_avoidance/collision_prevention.py",
+        "subscriptions": [
+          {
+            "msg_type": "String",
+            "topic": "/quad/gui/state",
+            "callback": "self._handle_state_change",
+            "qos_service_profile": "10"
+          }
+        ],
+        "publishers": [
+          {
+            "msg_type": "TwistStamped",
+            "topic": "/quad/cmd_vel",
+            "qos_service_profile": "10"
+          }
+        ]
+      },
+      {
+        "name": "mavic_command_test",
+        "path": "/home/jan/ros2_ws/src/quad-trajectory-execution-ros2/quad_trajectory_execution/quad_trajectory_execution/test/copter_manager/mavic_command_test.py",
+        "subscriptions": [],
+        "publishers": [
+          {
+            "msg_type": "Heartbeat",
+            "topic": "/mavros/quad_connect/to/heartbeat",
+            "qos_service_profile": "1"
+          },
+          {
+            "msg_type": "TwistStamped",
+            "topic": "/quad/cmd_vel",
+            "qos_service_profile": "10"
+          }
+        ]
+      }
+    ],
+    "subscriber": [
+      {
+        "name": "flight_logger_new",
+        "path": "/home/jan/ros2_ws/src/quad-trajectory-execution-ros2/quad_trajectory_execution/quad_trajectory_execution/logger/flight_logger_new.py",
+        "subscriptions": [
+          {
+            "msg_type": "Takeoff",
+            "topic": "/takeoff_action/goal",
+            "callback": "self.start",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Land",
+            "topic": "/land_action/result",
+            "callback": "self.end",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "TFMessage",
+            "topic": "/tf",
+            "callback": "self.update_positions",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "TwistStamped",
+            "topic": "/quad/cmd_vel",
+            "callback": "self.update_target_velocities",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "ControlSystemState",
+            "topic": "/quad/current_vel",
+            "callback": "self.update_current_velocities",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Pose",
+            "topic": "/quad/gui/homepoint",
+            "callback": "self.update_homepoint",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Float64",
+            "topic": "/quad/ned_yaw_offset_dynamic",
+            "callback": "self.update_ned_yaw_offset_dynamic",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Float64",
+            "topic": "/quad/ned_yaw_offset_takeoff",
+            "callback": "self.update_ned_yaw_offset_takeoff",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "PoseWithCovarianceStamped",
+            "topic": "/quad/estimated_pose",
+            "callback": "self.update_estimated_pose",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "FlyToPos",
+            "topic": "/fly_to_action/goal",
+            "callback": "self.handle_goal_update",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Mavlink",
+            "topic": "/mavlink/from",
+            "callback": "self.mavlink_callback",
+            "qos_service_profile": "10"
+          }
+        ],
+        "publishers": []
+      },
+      {
+        "name": "rviz_copter_manager",
+        "path": "/home/jan/ros2_ws/src/quad-trajectory-execution-ros2/quad_trajectory_execution/quad_trajectory_execution/copter_manager/rviz_copter_manager.py",
+        "subscriptions": [
+          {
+            "msg_type": "TwistStamped",
+            "topic": "/quad/cmd_vel",
+            "callback": "self.send_set_position_target_local_ned",
+            "qos_service_profile": "10"
+          }
+        ],
+        "publishers": [
+          {
+            "msg_type": "Heartbeat",
+            "topic": "/quad/heartbeat",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Battery",
+            "topic": "/quad/battery",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "ControlSystemState",
+            "topic": "/quad/current_vel",
+            "qos_service_profile": "10"
+          }
+        ]
+      },
+      {
+        "name": "mavlink_copter_manager",
+        "path": "/home/jan/ros2_ws/src/quad-trajectory-execution-ros2/quad_trajectory_execution/quad_trajectory_execution/copter_manager/mavlink_copter_manager.py",
+        "subscriptions": [
+          {
+            "msg_type": "Mavlink",
+            "topic": "/mavlink/from",
+            "callback": "self.mavlink_from_callback",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "BatteryState",
+            "topic": "/mavros/battery",
+            "callback": "self.battery_status_callback",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "ParamValue",
+            "topic": "/mavros/from/param_value",
+            "callback": "self.param_callback",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "TwistStamped",
+            "topic": "/quad/cmd_vel",
+            "callback": "self.send_set_position_target_local_ned",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Float64",
+            "topic": "/quad/pitch_to_poi",
+            "callback": "self.pitch_to_poi_callback",
+            "qos_service_profile": "10"
+          }
+        ],
+        "publishers": [
+          {
+            "msg_type": "PositionTarget",
+            "topic": "/mavros/to/position_target",
+            "qos_service_profile": "1"
+          },
+          {
+            "msg_type": "Heartbeat",
+            "topic": "/mavros/to/heartbeat",
+            "qos_service_profile": "1"
+          },
+          {
+            "msg_type": "Heartbeat",
+            "topic": "/quad/heartbeat",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Battery",
+            "topic": "/quad/battery",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Obstacle",
+            "topic": "/quad/obstacle",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "ObstacleDistance",
+            "topic": "/quad/obstacle_mavic3",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "ControlSystemState",
+            "topic": "/quad/current_vel",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "GimbalDeviceAttitudeStatus",
+            "topic": "/quad/gimbal_attitude",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Float64",
+            "topic": "/quad/ned_yaw_offset_dynamic",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Float64",
+            "topic": "/quad/ned_yaw_offset_takeoff",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "ParamExtValue",
+            "topic": "/quad/mavic/param_ext",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "ParamValue",
+            "topic": "/quad/mavic/param",
+            "qos_service_profile": "10"
+          }
+        ]
+      }
+    ]
+  },
+  "/quad/current_vel": {
+    "publisher": [
+      {
+        "name": "rviz_copter_manager",
+        "path": "/home/jan/ros2_ws/src/quad-trajectory-execution-ros2/quad_trajectory_execution/quad_trajectory_execution/copter_manager/rviz_copter_manager.py",
+        "subscriptions": [
+          {
+            "msg_type": "TwistStamped",
+            "topic": "/quad/cmd_vel",
+            "callback": "self.send_set_position_target_local_ned",
+            "qos_service_profile": "10"
+          }
+        ],
+        "publishers": [
+          {
+            "msg_type": "Heartbeat",
+            "topic": "/quad/heartbeat",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Battery",
+            "topic": "/quad/battery",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "ControlSystemState",
+            "topic": "/quad/current_vel",
+            "qos_service_profile": "10"
+          }
+        ]
+      },
+      {
+        "name": "simulation_copter_manager",
+        "path": "/home/jan/ros2_ws/src/quad-trajectory-execution-ros2/quad_trajectory_execution/quad_trajectory_execution/copter_manager/simulation_copter_manager.py",
+        "subscriptions": [
+          {
+            "msg_type": "GimbalDeviceAttitudeStatus",
+            "topic": "/quad/gimbal_attitude",
+            "callback": "self.gimbal_callback",
+            "qos_service_profile": "10"
+          }
+        ],
+        "publishers": [
+          {
+            "msg_type": "Twist",
+            "topic": "/simulation/drone/cmd_vel",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Heartbeat",
+            "topic": "/quad/heartbeat",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Battery",
+            "topic": "/quad/battery",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "ControlSystemState",
+            "topic": "/quad/current_vel",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Float64",
+            "topic": "/simulation/drone/camera_pitch_angle",
+            "qos_service_profile": "10"
+          }
+        ]
+      },
+      {
+        "name": "mavlink_copter_manager",
+        "path": "/home/jan/ros2_ws/src/quad-trajectory-execution-ros2/quad_trajectory_execution/quad_trajectory_execution/copter_manager/mavlink_copter_manager.py",
+        "subscriptions": [
+          {
+            "msg_type": "Mavlink",
+            "topic": "/mavlink/from",
+            "callback": "self.mavlink_from_callback",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "BatteryState",
+            "topic": "/mavros/battery",
+            "callback": "self.battery_status_callback",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "ParamValue",
+            "topic": "/mavros/from/param_value",
+            "callback": "self.param_callback",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "TwistStamped",
+            "topic": "/quad/cmd_vel",
+            "callback": "self.send_set_position_target_local_ned",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Float64",
+            "topic": "/quad/pitch_to_poi",
+            "callback": "self.pitch_to_poi_callback",
+            "qos_service_profile": "10"
+          }
+        ],
+        "publishers": [
+          {
+            "msg_type": "PositionTarget",
+            "topic": "/mavros/to/position_target",
+            "qos_service_profile": "1"
+          },
+          {
+            "msg_type": "Heartbeat",
+            "topic": "/mavros/to/heartbeat",
+            "qos_service_profile": "1"
+          },
+          {
+            "msg_type": "Heartbeat",
+            "topic": "/quad/heartbeat",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Battery",
+            "topic": "/quad/battery",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Obstacle",
+            "topic": "/quad/obstacle",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "ObstacleDistance",
+            "topic": "/quad/obstacle_mavic3",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "ControlSystemState",
+            "topic": "/quad/current_vel",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "GimbalDeviceAttitudeStatus",
+            "topic": "/quad/gimbal_attitude",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Float64",
+            "topic": "/quad/ned_yaw_offset_dynamic",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Float64",
+            "topic": "/quad/ned_yaw_offset_takeoff",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "ParamExtValue",
+            "topic": "/quad/mavic/param_ext",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "ParamValue",
+            "topic": "/quad/mavic/param",
+            "qos_service_profile": "10"
+          }
+        ]
+      }
+    ],
+    "subscriber": [
+      {
+        "name": "flight_logger_new",
+        "path": "/home/jan/ros2_ws/src/quad-trajectory-execution-ros2/quad_trajectory_execution/quad_trajectory_execution/logger/flight_logger_new.py",
+        "subscriptions": [
+          {
+            "msg_type": "Takeoff",
+            "topic": "/takeoff_action/goal",
+            "callback": "self.start",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Land",
+            "topic": "/land_action/result",
+            "callback": "self.end",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "TFMessage",
+            "topic": "/tf",
+            "callback": "self.update_positions",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "TwistStamped",
+            "topic": "/quad/cmd_vel",
+            "callback": "self.update_target_velocities",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "ControlSystemState",
+            "topic": "/quad/current_vel",
+            "callback": "self.update_current_velocities",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Pose",
+            "topic": "/quad/gui/homepoint",
+            "callback": "self.update_homepoint",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Float64",
+            "topic": "/quad/ned_yaw_offset_dynamic",
+            "callback": "self.update_ned_yaw_offset_dynamic",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Float64",
+            "topic": "/quad/ned_yaw_offset_takeoff",
+            "callback": "self.update_ned_yaw_offset_takeoff",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "PoseWithCovarianceStamped",
+            "topic": "/quad/estimated_pose",
+            "callback": "self.update_estimated_pose",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "FlyToPos",
+            "topic": "/fly_to_action/goal",
+            "callback": "self.handle_goal_update",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Mavlink",
+            "topic": "/mavlink/from",
+            "callback": "self.mavlink_callback",
+            "qos_service_profile": "10"
+          }
+        ],
+        "publishers": []
+      }
+    ]
+  },
+  "/quad/gui/homepoint": {
+    "publisher": [
+      {
+        "name": "mission_control",
+        "path": "/home/jan/ros2_ws/src/quad-trajectory-execution-ros2/quad_trajectory_execution/quad_trajectory_execution/mission_execution/mission_control.py",
+        "subscriptions": [
+          {
+            "msg_type": "TFMessage",
+            "topic": "/tf",
+            "callback": "self.update_distance_memory",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "GimbalDeviceAttitudeStatus",
+            "topic": "/quad/gimbal_attitude",
+            "callback": "self.gimbal_callback",
+            "qos_service_profile": "10"
+          }
+        ],
+        "publishers": [
+          {
+            "msg_type": "String",
+            "topic": "/quad/gui/state",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "TrajectoryPoint",
+            "topic": "/quad/gui/homepoint",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Float64",
+            "topic": "/quad/gui/distance_timer",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Float64",
+            "topic": "/quad/gui/inspection_timer",
+            "qos_service_profile": "10"
+          }
+        ]
+      }
+    ],
+    "subscriber": [
+      {
+        "name": "flight_logger_new",
+        "path": "/home/jan/ros2_ws/src/quad-trajectory-execution-ros2/quad_trajectory_execution/quad_trajectory_execution/logger/flight_logger_new.py",
+        "subscriptions": [
+          {
+            "msg_type": "Takeoff",
+            "topic": "/takeoff_action/goal",
+            "callback": "self.start",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Land",
+            "topic": "/land_action/result",
+            "callback": "self.end",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "TFMessage",
+            "topic": "/tf",
+            "callback": "self.update_positions",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "TwistStamped",
+            "topic": "/quad/cmd_vel",
+            "callback": "self.update_target_velocities",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "ControlSystemState",
+            "topic": "/quad/current_vel",
+            "callback": "self.update_current_velocities",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Pose",
+            "topic": "/quad/gui/homepoint",
+            "callback": "self.update_homepoint",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Float64",
+            "topic": "/quad/ned_yaw_offset_dynamic",
+            "callback": "self.update_ned_yaw_offset_dynamic",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Float64",
+            "topic": "/quad/ned_yaw_offset_takeoff",
+            "callback": "self.update_ned_yaw_offset_takeoff",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "PoseWithCovarianceStamped",
+            "topic": "/quad/estimated_pose",
+            "callback": "self.update_estimated_pose",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "FlyToPos",
+            "topic": "/fly_to_action/goal",
+            "callback": "self.handle_goal_update",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Mavlink",
+            "topic": "/mavlink/from",
+            "callback": "self.mavlink_callback",
+            "qos_service_profile": "10"
+          }
+        ],
+        "publishers": []
+      }
+    ]
+  },
+  "/quad/ned_yaw_offset_dynamic": {
+    "publisher": [
+      {
+        "name": "mavlink_copter_manager",
+        "path": "/home/jan/ros2_ws/src/quad-trajectory-execution-ros2/quad_trajectory_execution/quad_trajectory_execution/copter_manager/mavlink_copter_manager.py",
+        "subscriptions": [
+          {
+            "msg_type": "Mavlink",
+            "topic": "/mavlink/from",
+            "callback": "self.mavlink_from_callback",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "BatteryState",
+            "topic": "/mavros/battery",
+            "callback": "self.battery_status_callback",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "ParamValue",
+            "topic": "/mavros/from/param_value",
+            "callback": "self.param_callback",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "TwistStamped",
+            "topic": "/quad/cmd_vel",
+            "callback": "self.send_set_position_target_local_ned",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Float64",
+            "topic": "/quad/pitch_to_poi",
+            "callback": "self.pitch_to_poi_callback",
+            "qos_service_profile": "10"
+          }
+        ],
+        "publishers": [
+          {
+            "msg_type": "PositionTarget",
+            "topic": "/mavros/to/position_target",
+            "qos_service_profile": "1"
+          },
+          {
+            "msg_type": "Heartbeat",
+            "topic": "/mavros/to/heartbeat",
+            "qos_service_profile": "1"
+          },
+          {
+            "msg_type": "Heartbeat",
+            "topic": "/quad/heartbeat",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Battery",
+            "topic": "/quad/battery",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Obstacle",
+            "topic": "/quad/obstacle",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "ObstacleDistance",
+            "topic": "/quad/obstacle_mavic3",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "ControlSystemState",
+            "topic": "/quad/current_vel",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "GimbalDeviceAttitudeStatus",
+            "topic": "/quad/gimbal_attitude",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Float64",
+            "topic": "/quad/ned_yaw_offset_dynamic",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Float64",
+            "topic": "/quad/ned_yaw_offset_takeoff",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "ParamExtValue",
+            "topic": "/quad/mavic/param_ext",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "ParamValue",
+            "topic": "/quad/mavic/param",
+            "qos_service_profile": "10"
+          }
+        ]
+      }
+    ],
+    "subscriber": [
+      {
+        "name": "flight_logger_new",
+        "path": "/home/jan/ros2_ws/src/quad-trajectory-execution-ros2/quad_trajectory_execution/quad_trajectory_execution/logger/flight_logger_new.py",
+        "subscriptions": [
+          {
+            "msg_type": "Takeoff",
+            "topic": "/takeoff_action/goal",
+            "callback": "self.start",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Land",
+            "topic": "/land_action/result",
+            "callback": "self.end",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "TFMessage",
+            "topic": "/tf",
+            "callback": "self.update_positions",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "TwistStamped",
+            "topic": "/quad/cmd_vel",
+            "callback": "self.update_target_velocities",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "ControlSystemState",
+            "topic": "/quad/current_vel",
+            "callback": "self.update_current_velocities",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Pose",
+            "topic": "/quad/gui/homepoint",
+            "callback": "self.update_homepoint",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Float64",
+            "topic": "/quad/ned_yaw_offset_dynamic",
+            "callback": "self.update_ned_yaw_offset_dynamic",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Float64",
+            "topic": "/quad/ned_yaw_offset_takeoff",
+            "callback": "self.update_ned_yaw_offset_takeoff",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "PoseWithCovarianceStamped",
+            "topic": "/quad/estimated_pose",
+            "callback": "self.update_estimated_pose",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "FlyToPos",
+            "topic": "/fly_to_action/goal",
+            "callback": "self.handle_goal_update",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Mavlink",
+            "topic": "/mavlink/from",
+            "callback": "self.mavlink_callback",
+            "qos_service_profile": "10"
+          }
+        ],
+        "publishers": []
+      }
+    ]
+  },
+  "/quad/ned_yaw_offset_takeoff": {
+    "publisher": [
+      {
+        "name": "mavlink_copter_manager",
+        "path": "/home/jan/ros2_ws/src/quad-trajectory-execution-ros2/quad_trajectory_execution/quad_trajectory_execution/copter_manager/mavlink_copter_manager.py",
+        "subscriptions": [
+          {
+            "msg_type": "Mavlink",
+            "topic": "/mavlink/from",
+            "callback": "self.mavlink_from_callback",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "BatteryState",
+            "topic": "/mavros/battery",
+            "callback": "self.battery_status_callback",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "ParamValue",
+            "topic": "/mavros/from/param_value",
+            "callback": "self.param_callback",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "TwistStamped",
+            "topic": "/quad/cmd_vel",
+            "callback": "self.send_set_position_target_local_ned",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Float64",
+            "topic": "/quad/pitch_to_poi",
+            "callback": "self.pitch_to_poi_callback",
+            "qos_service_profile": "10"
+          }
+        ],
+        "publishers": [
+          {
+            "msg_type": "PositionTarget",
+            "topic": "/mavros/to/position_target",
+            "qos_service_profile": "1"
+          },
+          {
+            "msg_type": "Heartbeat",
+            "topic": "/mavros/to/heartbeat",
+            "qos_service_profile": "1"
+          },
+          {
+            "msg_type": "Heartbeat",
+            "topic": "/quad/heartbeat",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Battery",
+            "topic": "/quad/battery",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Obstacle",
+            "topic": "/quad/obstacle",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "ObstacleDistance",
+            "topic": "/quad/obstacle_mavic3",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "ControlSystemState",
+            "topic": "/quad/current_vel",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "GimbalDeviceAttitudeStatus",
+            "topic": "/quad/gimbal_attitude",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Float64",
+            "topic": "/quad/ned_yaw_offset_dynamic",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Float64",
+            "topic": "/quad/ned_yaw_offset_takeoff",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "ParamExtValue",
+            "topic": "/quad/mavic/param_ext",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "ParamValue",
+            "topic": "/quad/mavic/param",
+            "qos_service_profile": "10"
+          }
+        ]
+      }
+    ],
+    "subscriber": [
+      {
+        "name": "flight_logger_new",
+        "path": "/home/jan/ros2_ws/src/quad-trajectory-execution-ros2/quad_trajectory_execution/quad_trajectory_execution/logger/flight_logger_new.py",
+        "subscriptions": [
+          {
+            "msg_type": "Takeoff",
+            "topic": "/takeoff_action/goal",
+            "callback": "self.start",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Land",
+            "topic": "/land_action/result",
+            "callback": "self.end",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "TFMessage",
+            "topic": "/tf",
+            "callback": "self.update_positions",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "TwistStamped",
+            "topic": "/quad/cmd_vel",
+            "callback": "self.update_target_velocities",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "ControlSystemState",
+            "topic": "/quad/current_vel",
+            "callback": "self.update_current_velocities",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Pose",
+            "topic": "/quad/gui/homepoint",
+            "callback": "self.update_homepoint",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Float64",
+            "topic": "/quad/ned_yaw_offset_dynamic",
+            "callback": "self.update_ned_yaw_offset_dynamic",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Float64",
+            "topic": "/quad/ned_yaw_offset_takeoff",
+            "callback": "self.update_ned_yaw_offset_takeoff",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "PoseWithCovarianceStamped",
+            "topic": "/quad/estimated_pose",
+            "callback": "self.update_estimated_pose",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "FlyToPos",
+            "topic": "/fly_to_action/goal",
+            "callback": "self.handle_goal_update",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Mavlink",
+            "topic": "/mavlink/from",
+            "callback": "self.mavlink_callback",
+            "qos_service_profile": "10"
+          }
+        ],
+        "publishers": []
+      }
+    ]
+  },
+  "/quad/estimated_pose": {
+    "publisher": [
+      {
+        "name": "dkf_state_estimation_publisher",
+        "path": "/home/jan/ros2_ws/src/quad-trajectory-execution-ros2/quad_trajectory_execution/quad_trajectory_execution/navigation/dkf_state_estimation_publisher.py",
+        "subscriptions": [],
+        "publishers": [
+          {
+            "msg_type": "PoseWithCovarianceStamped",
+            "topic": "/quad/estimated_pose",
+            "qos_service_profile": "10"
+          }
+        ]
+      }
+    ],
+    "subscriber": [
+      {
+        "name": "flight_logger_new",
+        "path": "/home/jan/ros2_ws/src/quad-trajectory-execution-ros2/quad_trajectory_execution/quad_trajectory_execution/logger/flight_logger_new.py",
+        "subscriptions": [
+          {
+            "msg_type": "Takeoff",
+            "topic": "/takeoff_action/goal",
+            "callback": "self.start",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Land",
+            "topic": "/land_action/result",
+            "callback": "self.end",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "TFMessage",
+            "topic": "/tf",
+            "callback": "self.update_positions",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "TwistStamped",
+            "topic": "/quad/cmd_vel",
+            "callback": "self.update_target_velocities",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "ControlSystemState",
+            "topic": "/quad/current_vel",
+            "callback": "self.update_current_velocities",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Pose",
+            "topic": "/quad/gui/homepoint",
+            "callback": "self.update_homepoint",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Float64",
+            "topic": "/quad/ned_yaw_offset_dynamic",
+            "callback": "self.update_ned_yaw_offset_dynamic",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Float64",
+            "topic": "/quad/ned_yaw_offset_takeoff",
+            "callback": "self.update_ned_yaw_offset_takeoff",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "PoseWithCovarianceStamped",
+            "topic": "/quad/estimated_pose",
+            "callback": "self.update_estimated_pose",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "FlyToPos",
+            "topic": "/fly_to_action/goal",
+            "callback": "self.handle_goal_update",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Mavlink",
+            "topic": "/mavlink/from",
+            "callback": "self.mavlink_callback",
+            "qos_service_profile": "10"
+          }
+        ],
+        "publishers": []
+      }
+    ]
+  },
+  "/fly_to_action/goal": {
+    "publisher": [],
+    "subscriber": [
+      {
+        "name": "flight_logger_new",
+        "path": "/home/jan/ros2_ws/src/quad-trajectory-execution-ros2/quad_trajectory_execution/quad_trajectory_execution/logger/flight_logger_new.py",
+        "subscriptions": [
+          {
+            "msg_type": "Takeoff",
+            "topic": "/takeoff_action/goal",
+            "callback": "self.start",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Land",
+            "topic": "/land_action/result",
+            "callback": "self.end",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "TFMessage",
+            "topic": "/tf",
+            "callback": "self.update_positions",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "TwistStamped",
+            "topic": "/quad/cmd_vel",
+            "callback": "self.update_target_velocities",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "ControlSystemState",
+            "topic": "/quad/current_vel",
+            "callback": "self.update_current_velocities",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Pose",
+            "topic": "/quad/gui/homepoint",
+            "callback": "self.update_homepoint",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Float64",
+            "topic": "/quad/ned_yaw_offset_dynamic",
+            "callback": "self.update_ned_yaw_offset_dynamic",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Float64",
+            "topic": "/quad/ned_yaw_offset_takeoff",
+            "callback": "self.update_ned_yaw_offset_takeoff",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "PoseWithCovarianceStamped",
+            "topic": "/quad/estimated_pose",
+            "callback": "self.update_estimated_pose",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "FlyToPos",
+            "topic": "/fly_to_action/goal",
+            "callback": "self.handle_goal_update",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Mavlink",
+            "topic": "/mavlink/from",
+            "callback": "self.mavlink_callback",
+            "qos_service_profile": "10"
+          }
+        ],
+        "publishers": []
+      }
+    ]
+  },
+  "/mavlink/from": {
+    "publisher": [],
+    "subscriber": [
+      {
+        "name": "flight_logger_new",
+        "path": "/home/jan/ros2_ws/src/quad-trajectory-execution-ros2/quad_trajectory_execution/quad_trajectory_execution/logger/flight_logger_new.py",
+        "subscriptions": [
+          {
+            "msg_type": "Takeoff",
+            "topic": "/takeoff_action/goal",
+            "callback": "self.start",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Land",
+            "topic": "/land_action/result",
+            "callback": "self.end",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "TFMessage",
+            "topic": "/tf",
+            "callback": "self.update_positions",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "TwistStamped",
+            "topic": "/quad/cmd_vel",
+            "callback": "self.update_target_velocities",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "ControlSystemState",
+            "topic": "/quad/current_vel",
+            "callback": "self.update_current_velocities",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Pose",
+            "topic": "/quad/gui/homepoint",
+            "callback": "self.update_homepoint",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Float64",
+            "topic": "/quad/ned_yaw_offset_dynamic",
+            "callback": "self.update_ned_yaw_offset_dynamic",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Float64",
+            "topic": "/quad/ned_yaw_offset_takeoff",
+            "callback": "self.update_ned_yaw_offset_takeoff",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "PoseWithCovarianceStamped",
+            "topic": "/quad/estimated_pose",
+            "callback": "self.update_estimated_pose",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "FlyToPos",
+            "topic": "/fly_to_action/goal",
+            "callback": "self.handle_goal_update",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Mavlink",
+            "topic": "/mavlink/from",
+            "callback": "self.mavlink_callback",
+            "qos_service_profile": "10"
+          }
+        ],
+        "publishers": []
+      },
+      {
+        "name": "mavlink_copter_manager",
+        "path": "/home/jan/ros2_ws/src/quad-trajectory-execution-ros2/quad_trajectory_execution/quad_trajectory_execution/copter_manager/mavlink_copter_manager.py",
+        "subscriptions": [
+          {
+            "msg_type": "Mavlink",
+            "topic": "/mavlink/from",
+            "callback": "self.mavlink_from_callback",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "BatteryState",
+            "topic": "/mavros/battery",
+            "callback": "self.battery_status_callback",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "ParamValue",
+            "topic": "/mavros/from/param_value",
+            "callback": "self.param_callback",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "TwistStamped",
+            "topic": "/quad/cmd_vel",
+            "callback": "self.send_set_position_target_local_ned",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Float64",
+            "topic": "/quad/pitch_to_poi",
+            "callback": "self.pitch_to_poi_callback",
+            "qos_service_profile": "10"
+          }
+        ],
+        "publishers": [
+          {
+            "msg_type": "PositionTarget",
+            "topic": "/mavros/to/position_target",
+            "qos_service_profile": "1"
+          },
+          {
+            "msg_type": "Heartbeat",
+            "topic": "/mavros/to/heartbeat",
+            "qos_service_profile": "1"
+          },
+          {
+            "msg_type": "Heartbeat",
+            "topic": "/quad/heartbeat",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Battery",
+            "topic": "/quad/battery",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Obstacle",
+            "topic": "/quad/obstacle",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "ObstacleDistance",
+            "topic": "/quad/obstacle_mavic3",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "ControlSystemState",
+            "topic": "/quad/current_vel",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "GimbalDeviceAttitudeStatus",
+            "topic": "/quad/gimbal_attitude",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Float64",
+            "topic": "/quad/ned_yaw_offset_dynamic",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Float64",
+            "topic": "/quad/ned_yaw_offset_takeoff",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "ParamExtValue",
+            "topic": "/quad/mavic/param_ext",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "ParamValue",
+            "topic": "/quad/mavic/param",
+            "qos_service_profile": "10"
+          }
+        ]
+      }
+    ]
+  },
+  "/takeoff_action/_action/status": {
+    "publisher": [],
+    "subscriber": [
+      {
+        "name": "cpu_usage_logger",
+        "path": "/home/jan/ros2_ws/src/quad-trajectory-execution-ros2/quad_trajectory_execution/quad_trajectory_execution/logger/cpu_usage_logger.py",
+        "subscriptions": [
+          {
+            "msg_type": "GoalStatusArray",
+            "topic": "/takeoff_action/_action/status",
+            "callback": "self.start",
+            "qos_service_profile": "1"
+          },
+          {
+            "msg_type": "GoalStatusArray",
+            "topic": "/land_action/_action/status",
+            "callback": "self.end",
+            "qos_service_profile": "1"
+          }
+        ],
+        "publishers": []
+      },
+      {
+        "name": "watch_dog_obstacle",
+        "path": "/home/jan/ros2_ws/src/quad-trajectory-execution-ros2/quad_trajectory_execution/quad_trajectory_execution/watch_dogs/watch_dog_obstacle.py",
+        "subscriptions": [
+          {
+            "msg_type": "GoalStatusArray",
+            "topic": "/takeoff_action/_action/status",
+            "callback": "self.start",
+            "qos_service_profile": "1"
+          },
+          {
+            "msg_type": "GoalStatusArray",
+            "topic": "/land_action/_action/status",
+            "callback": "self.end",
+            "qos_service_profile": "1"
+          },
+          {
+            "msg_type": "Obstacle",
+            "topic": "/quad/obstacle",
+            "callback": "self.distance_sensor_callback_mavic2",
+            "qos_service_profile": "1"
+          },
+          {
+            "msg_type": "ObstacleDistance",
+            "topic": "/quad/obstacle_mavic3",
+            "callback": "self.obstacle_distance_callback_mavic3",
+            "qos_service_profile": "1"
+          }
+        ],
+        "publishers": []
+      }
+    ]
+  },
+  "/land_action/_action/status": {
+    "publisher": [],
+    "subscriber": [
+      {
+        "name": "cpu_usage_logger",
+        "path": "/home/jan/ros2_ws/src/quad-trajectory-execution-ros2/quad_trajectory_execution/quad_trajectory_execution/logger/cpu_usage_logger.py",
+        "subscriptions": [
+          {
+            "msg_type": "GoalStatusArray",
+            "topic": "/takeoff_action/_action/status",
+            "callback": "self.start",
+            "qos_service_profile": "1"
+          },
+          {
+            "msg_type": "GoalStatusArray",
+            "topic": "/land_action/_action/status",
+            "callback": "self.end",
+            "qos_service_profile": "1"
+          }
+        ],
+        "publishers": []
+      },
+      {
+        "name": "watch_dog_obstacle",
+        "path": "/home/jan/ros2_ws/src/quad-trajectory-execution-ros2/quad_trajectory_execution/quad_trajectory_execution/watch_dogs/watch_dog_obstacle.py",
+        "subscriptions": [
+          {
+            "msg_type": "GoalStatusArray",
+            "topic": "/takeoff_action/_action/status",
+            "callback": "self.start",
+            "qos_service_profile": "1"
+          },
+          {
+            "msg_type": "GoalStatusArray",
+            "topic": "/land_action/_action/status",
+            "callback": "self.end",
+            "qos_service_profile": "1"
+          },
+          {
+            "msg_type": "Obstacle",
+            "topic": "/quad/obstacle",
+            "callback": "self.distance_sensor_callback_mavic2",
+            "qos_service_profile": "1"
+          },
+          {
+            "msg_type": "ObstacleDistance",
+            "topic": "/quad/obstacle_mavic3",
+            "callback": "self.obstacle_distance_callback_mavic3",
+            "qos_service_profile": "1"
+          }
+        ],
+        "publishers": []
+      }
+    ]
+  },
+  "pointCloud": {
+    "publisher": [
+      {
+        "name": "quad_motion_capture",
+        "path": "/home/jan/ros2_ws/src/quad-trajectory-execution-ros2/quad_trajectory_execution/quad_trajectory_execution/vicon/quad_motion_capture.py",
+        "subscriptions": [],
+        "publishers": [
+          {
+            "msg_type": "PointCloud2",
+            "topic": "pointCloud",
+            "qos_service_profile": "1"
+          }
+        ]
+      }
+    ],
+    "subscriber": []
+  },
+  "/quad/battery": {
+    "publisher": [
+      {
+        "name": "rviz_copter_manager",
+        "path": "/home/jan/ros2_ws/src/quad-trajectory-execution-ros2/quad_trajectory_execution/quad_trajectory_execution/copter_manager/rviz_copter_manager.py",
+        "subscriptions": [
+          {
+            "msg_type": "TwistStamped",
+            "topic": "/quad/cmd_vel",
+            "callback": "self.send_set_position_target_local_ned",
+            "qos_service_profile": "10"
+          }
+        ],
+        "publishers": [
+          {
+            "msg_type": "Heartbeat",
+            "topic": "/quad/heartbeat",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Battery",
+            "topic": "/quad/battery",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "ControlSystemState",
+            "topic": "/quad/current_vel",
+            "qos_service_profile": "10"
+          }
+        ]
+      },
+      {
+        "name": "simulation_copter_manager",
+        "path": "/home/jan/ros2_ws/src/quad-trajectory-execution-ros2/quad_trajectory_execution/quad_trajectory_execution/copter_manager/simulation_copter_manager.py",
+        "subscriptions": [
+          {
+            "msg_type": "GimbalDeviceAttitudeStatus",
+            "topic": "/quad/gimbal_attitude",
+            "callback": "self.gimbal_callback",
+            "qos_service_profile": "10"
+          }
+        ],
+        "publishers": [
+          {
+            "msg_type": "Twist",
+            "topic": "/simulation/drone/cmd_vel",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Heartbeat",
+            "topic": "/quad/heartbeat",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Battery",
+            "topic": "/quad/battery",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "ControlSystemState",
+            "topic": "/quad/current_vel",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Float64",
+            "topic": "/simulation/drone/camera_pitch_angle",
+            "qos_service_profile": "10"
+          }
+        ]
+      },
+      {
+        "name": "mavlink_copter_manager",
+        "path": "/home/jan/ros2_ws/src/quad-trajectory-execution-ros2/quad_trajectory_execution/quad_trajectory_execution/copter_manager/mavlink_copter_manager.py",
+        "subscriptions": [
+          {
+            "msg_type": "Mavlink",
+            "topic": "/mavlink/from",
+            "callback": "self.mavlink_from_callback",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "BatteryState",
+            "topic": "/mavros/battery",
+            "callback": "self.battery_status_callback",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "ParamValue",
+            "topic": "/mavros/from/param_value",
+            "callback": "self.param_callback",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "TwistStamped",
+            "topic": "/quad/cmd_vel",
+            "callback": "self.send_set_position_target_local_ned",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Float64",
+            "topic": "/quad/pitch_to_poi",
+            "callback": "self.pitch_to_poi_callback",
+            "qos_service_profile": "10"
+          }
+        ],
+        "publishers": [
+          {
+            "msg_type": "PositionTarget",
+            "topic": "/mavros/to/position_target",
+            "qos_service_profile": "1"
+          },
+          {
+            "msg_type": "Heartbeat",
+            "topic": "/mavros/to/heartbeat",
+            "qos_service_profile": "1"
+          },
+          {
+            "msg_type": "Heartbeat",
+            "topic": "/quad/heartbeat",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Battery",
+            "topic": "/quad/battery",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Obstacle",
+            "topic": "/quad/obstacle",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "ObstacleDistance",
+            "topic": "/quad/obstacle_mavic3",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "ControlSystemState",
+            "topic": "/quad/current_vel",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "GimbalDeviceAttitudeStatus",
+            "topic": "/quad/gimbal_attitude",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Float64",
+            "topic": "/quad/ned_yaw_offset_dynamic",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Float64",
+            "topic": "/quad/ned_yaw_offset_takeoff",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "ParamExtValue",
+            "topic": "/quad/mavic/param_ext",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "ParamValue",
+            "topic": "/quad/mavic/param",
+            "qos_service_profile": "10"
+          }
+        ]
+      }
+    ],
+    "subscriber": [
+      {
+        "name": "watch_dog_battery_land",
+        "path": "/home/jan/ros2_ws/src/quad-trajectory-execution-ros2/quad_trajectory_execution/quad_trajectory_execution/watch_dogs/watch_dog_battery_land.py",
+        "subscriptions": [
+          {
+            "msg_type": "Battery",
+            "topic": "/quad/battery",
+            "callback": "self.battery_callback",
+            "qos_service_profile": "1"
+          }
+        ],
+        "publishers": []
+      },
+      {
+        "name": "watch_dog_battery_mission_rth",
+        "path": "/home/jan/ros2_ws/src/quad-trajectory-execution-ros2/quad_trajectory_execution/quad_trajectory_execution/watch_dogs/watch_dog_battery_mission_rth.py",
+        "subscriptions": [
+          {
+            "msg_type": "Battery",
+            "topic": "/quad/battery",
+            "callback": "self.battery_callback",
+            "qos_service_profile": "1"
+          },
+          {
+            "msg_type": "Float64",
+            "topic": "/quad/gui/total_progress",
+            "callback": "self.gui_total_progress_callback",
+            "qos_service_profile": "1"
+          }
+        ],
+        "publishers": []
+      }
+    ]
+  },
+  "/quad/gui/total_progress": {
+    "publisher": [
+      {
+        "name": "trajectory_control",
+        "path": "/home/jan/ros2_ws/src/quad-trajectory-execution-ros2/quad_trajectory_execution/quad_trajectory_execution/mission_execution/trajectory_control.py",
+        "subscriptions": [
+          {
+            "msg_type": "PartInfo",
+            "topic": "/quad/comp_info",
+            "callback": "self.part_info_callback",
+            "qos_service_profile": "10"
+          }
+        ],
+        "publishers": [
+          {
+            "msg_type": "Float64",
+            "topic": "/quad/gui/total_progress",
+            "qos_service_profile": "10"
+          }
+        ]
+      }
+    ],
+    "subscriber": [
+      {
+        "name": "watch_dog_battery_mission_rth",
+        "path": "/home/jan/ros2_ws/src/quad-trajectory-execution-ros2/quad_trajectory_execution/quad_trajectory_execution/watch_dogs/watch_dog_battery_mission_rth.py",
+        "subscriptions": [
+          {
+            "msg_type": "Battery",
+            "topic": "/quad/battery",
+            "callback": "self.battery_callback",
+            "qos_service_profile": "1"
+          },
+          {
+            "msg_type": "Float64",
+            "topic": "/quad/gui/total_progress",
+            "callback": "self.gui_total_progress_callback",
+            "qos_service_profile": "1"
+          }
+        ],
+        "publishers": []
+      }
+    ]
+  },
+  "/quad/obstacle": {
+    "publisher": [
+      {
+        "name": "mavlink_copter_manager",
+        "path": "/home/jan/ros2_ws/src/quad-trajectory-execution-ros2/quad_trajectory_execution/quad_trajectory_execution/copter_manager/mavlink_copter_manager.py",
+        "subscriptions": [
+          {
+            "msg_type": "Mavlink",
+            "topic": "/mavlink/from",
+            "callback": "self.mavlink_from_callback",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "BatteryState",
+            "topic": "/mavros/battery",
+            "callback": "self.battery_status_callback",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "ParamValue",
+            "topic": "/mavros/from/param_value",
+            "callback": "self.param_callback",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "TwistStamped",
+            "topic": "/quad/cmd_vel",
+            "callback": "self.send_set_position_target_local_ned",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Float64",
+            "topic": "/quad/pitch_to_poi",
+            "callback": "self.pitch_to_poi_callback",
+            "qos_service_profile": "10"
+          }
+        ],
+        "publishers": [
+          {
+            "msg_type": "PositionTarget",
+            "topic": "/mavros/to/position_target",
+            "qos_service_profile": "1"
+          },
+          {
+            "msg_type": "Heartbeat",
+            "topic": "/mavros/to/heartbeat",
+            "qos_service_profile": "1"
+          },
+          {
+            "msg_type": "Heartbeat",
+            "topic": "/quad/heartbeat",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Battery",
+            "topic": "/quad/battery",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Obstacle",
+            "topic": "/quad/obstacle",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "ObstacleDistance",
+            "topic": "/quad/obstacle_mavic3",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "ControlSystemState",
+            "topic": "/quad/current_vel",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "GimbalDeviceAttitudeStatus",
+            "topic": "/quad/gimbal_attitude",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Float64",
+            "topic": "/quad/ned_yaw_offset_dynamic",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Float64",
+            "topic": "/quad/ned_yaw_offset_takeoff",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "ParamExtValue",
+            "topic": "/quad/mavic/param_ext",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "ParamValue",
+            "topic": "/quad/mavic/param",
+            "qos_service_profile": "10"
+          }
+        ]
+      }
+    ],
+    "subscriber": [
+      {
+        "name": "watch_dog_obstacle",
+        "path": "/home/jan/ros2_ws/src/quad-trajectory-execution-ros2/quad_trajectory_execution/quad_trajectory_execution/watch_dogs/watch_dog_obstacle.py",
+        "subscriptions": [
+          {
+            "msg_type": "GoalStatusArray",
+            "topic": "/takeoff_action/_action/status",
+            "callback": "self.start",
+            "qos_service_profile": "1"
+          },
+          {
+            "msg_type": "GoalStatusArray",
+            "topic": "/land_action/_action/status",
+            "callback": "self.end",
+            "qos_service_profile": "1"
+          },
+          {
+            "msg_type": "Obstacle",
+            "topic": "/quad/obstacle",
+            "callback": "self.distance_sensor_callback_mavic2",
+            "qos_service_profile": "1"
+          },
+          {
+            "msg_type": "ObstacleDistance",
+            "topic": "/quad/obstacle_mavic3",
+            "callback": "self.obstacle_distance_callback_mavic3",
+            "qos_service_profile": "1"
+          }
+        ],
+        "publishers": []
+      },
+      {
+        "name": "obstacle_detection_v2",
+        "path": "/home/jan/ros2_ws/src/quad-trajectory-execution-ros2/quad_trajectory_execution/quad_trajectory_execution/obstacle_avoidance/obstacle_detection_v2.py",
+        "subscriptions": [
+          {
+            "msg_type": "Obstacle",
+            "topic": "/quad/obstacle",
+            "callback": "self.process_sensor_data",
+            "qos_service_profile": "10"
+          }
+        ],
+        "publishers": [
+          {
+            "msg_type": "Perception",
+            "topic": "/quad/perception",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "PointCloud2",
+            "topic": "/quad/cloud",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "PointCloud2",
+            "topic": "/quad/free_space",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "PointCloud2",
+            "topic": "/quad/rviz_obs",
+            "qos_service_profile": "10"
+          }
+        ]
+      }
+    ]
+  },
+  "/quad/obstacle_mavic3": {
+    "publisher": [
+      {
+        "name": "simulated_distance_sensors",
+        "path": "/home/jan/ros2_ws/src/quad-trajectory-execution-ros2/quad_trajectory_execution/quad_trajectory_execution/simulation/simulated_distance_sensors.py",
+        "subscriptions": [],
+        "publishers": [
+          {
+            "msg_type": "ObstacleDistance",
+            "topic": "/quad/obstacle_mavic3",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "LaserScan",
+            "topic": "/quad/laser",
+            "qos_service_profile": "10"
+          }
+        ]
+      },
+      {
+        "name": "mavlink_copter_manager",
+        "path": "/home/jan/ros2_ws/src/quad-trajectory-execution-ros2/quad_trajectory_execution/quad_trajectory_execution/copter_manager/mavlink_copter_manager.py",
+        "subscriptions": [
+          {
+            "msg_type": "Mavlink",
+            "topic": "/mavlink/from",
+            "callback": "self.mavlink_from_callback",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "BatteryState",
+            "topic": "/mavros/battery",
+            "callback": "self.battery_status_callback",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "ParamValue",
+            "topic": "/mavros/from/param_value",
+            "callback": "self.param_callback",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "TwistStamped",
+            "topic": "/quad/cmd_vel",
+            "callback": "self.send_set_position_target_local_ned",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Float64",
+            "topic": "/quad/pitch_to_poi",
+            "callback": "self.pitch_to_poi_callback",
+            "qos_service_profile": "10"
+          }
+        ],
+        "publishers": [
+          {
+            "msg_type": "PositionTarget",
+            "topic": "/mavros/to/position_target",
+            "qos_service_profile": "1"
+          },
+          {
+            "msg_type": "Heartbeat",
+            "topic": "/mavros/to/heartbeat",
+            "qos_service_profile": "1"
+          },
+          {
+            "msg_type": "Heartbeat",
+            "topic": "/quad/heartbeat",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Battery",
+            "topic": "/quad/battery",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Obstacle",
+            "topic": "/quad/obstacle",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "ObstacleDistance",
+            "topic": "/quad/obstacle_mavic3",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "ControlSystemState",
+            "topic": "/quad/current_vel",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "GimbalDeviceAttitudeStatus",
+            "topic": "/quad/gimbal_attitude",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Float64",
+            "topic": "/quad/ned_yaw_offset_dynamic",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Float64",
+            "topic": "/quad/ned_yaw_offset_takeoff",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "ParamExtValue",
+            "topic": "/quad/mavic/param_ext",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "ParamValue",
+            "topic": "/quad/mavic/param",
+            "qos_service_profile": "10"
+          }
+        ]
+      }
+    ],
+    "subscriber": [
+      {
+        "name": "watch_dog_obstacle",
+        "path": "/home/jan/ros2_ws/src/quad-trajectory-execution-ros2/quad_trajectory_execution/quad_trajectory_execution/watch_dogs/watch_dog_obstacle.py",
+        "subscriptions": [
+          {
+            "msg_type": "GoalStatusArray",
+            "topic": "/takeoff_action/_action/status",
+            "callback": "self.start",
+            "qos_service_profile": "1"
+          },
+          {
+            "msg_type": "GoalStatusArray",
+            "topic": "/land_action/_action/status",
+            "callback": "self.end",
+            "qos_service_profile": "1"
+          },
+          {
+            "msg_type": "Obstacle",
+            "topic": "/quad/obstacle",
+            "callback": "self.distance_sensor_callback_mavic2",
+            "qos_service_profile": "1"
+          },
+          {
+            "msg_type": "ObstacleDistance",
+            "topic": "/quad/obstacle_mavic3",
+            "callback": "self.obstacle_distance_callback_mavic3",
+            "qos_service_profile": "1"
+          }
+        ],
+        "publishers": []
+      }
+    ]
+  },
+  "/quad/heartbeat": {
+    "publisher": [
+      {
+        "name": "rviz_copter_manager",
+        "path": "/home/jan/ros2_ws/src/quad-trajectory-execution-ros2/quad_trajectory_execution/quad_trajectory_execution/copter_manager/rviz_copter_manager.py",
+        "subscriptions": [
+          {
+            "msg_type": "TwistStamped",
+            "topic": "/quad/cmd_vel",
+            "callback": "self.send_set_position_target_local_ned",
+            "qos_service_profile": "10"
+          }
+        ],
+        "publishers": [
+          {
+            "msg_type": "Heartbeat",
+            "topic": "/quad/heartbeat",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Battery",
+            "topic": "/quad/battery",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "ControlSystemState",
+            "topic": "/quad/current_vel",
+            "qos_service_profile": "10"
+          }
+        ]
+      },
+      {
+        "name": "simulation_copter_manager",
+        "path": "/home/jan/ros2_ws/src/quad-trajectory-execution-ros2/quad_trajectory_execution/quad_trajectory_execution/copter_manager/simulation_copter_manager.py",
+        "subscriptions": [
+          {
+            "msg_type": "GimbalDeviceAttitudeStatus",
+            "topic": "/quad/gimbal_attitude",
+            "callback": "self.gimbal_callback",
+            "qos_service_profile": "10"
+          }
+        ],
+        "publishers": [
+          {
+            "msg_type": "Twist",
+            "topic": "/simulation/drone/cmd_vel",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Heartbeat",
+            "topic": "/quad/heartbeat",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Battery",
+            "topic": "/quad/battery",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "ControlSystemState",
+            "topic": "/quad/current_vel",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Float64",
+            "topic": "/simulation/drone/camera_pitch_angle",
+            "qos_service_profile": "10"
+          }
+        ]
+      },
+      {
+        "name": "mavlink_copter_manager",
+        "path": "/home/jan/ros2_ws/src/quad-trajectory-execution-ros2/quad_trajectory_execution/quad_trajectory_execution/copter_manager/mavlink_copter_manager.py",
+        "subscriptions": [
+          {
+            "msg_type": "Mavlink",
+            "topic": "/mavlink/from",
+            "callback": "self.mavlink_from_callback",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "BatteryState",
+            "topic": "/mavros/battery",
+            "callback": "self.battery_status_callback",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "ParamValue",
+            "topic": "/mavros/from/param_value",
+            "callback": "self.param_callback",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "TwistStamped",
+            "topic": "/quad/cmd_vel",
+            "callback": "self.send_set_position_target_local_ned",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Float64",
+            "topic": "/quad/pitch_to_poi",
+            "callback": "self.pitch_to_poi_callback",
+            "qos_service_profile": "10"
+          }
+        ],
+        "publishers": [
+          {
+            "msg_type": "PositionTarget",
+            "topic": "/mavros/to/position_target",
+            "qos_service_profile": "1"
+          },
+          {
+            "msg_type": "Heartbeat",
+            "topic": "/mavros/to/heartbeat",
+            "qos_service_profile": "1"
+          },
+          {
+            "msg_type": "Heartbeat",
+            "topic": "/quad/heartbeat",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Battery",
+            "topic": "/quad/battery",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Obstacle",
+            "topic": "/quad/obstacle",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "ObstacleDistance",
+            "topic": "/quad/obstacle_mavic3",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "ControlSystemState",
+            "topic": "/quad/current_vel",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "GimbalDeviceAttitudeStatus",
+            "topic": "/quad/gimbal_attitude",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Float64",
+            "topic": "/quad/ned_yaw_offset_dynamic",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Float64",
+            "topic": "/quad/ned_yaw_offset_takeoff",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "ParamExtValue",
+            "topic": "/quad/mavic/param_ext",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "ParamValue",
+            "topic": "/quad/mavic/param",
+            "qos_service_profile": "10"
+          }
+        ]
+      }
+    ],
+    "subscriber": [
+      {
+        "name": "watch_dog_heartbeat",
+        "path": "/home/jan/ros2_ws/src/quad-trajectory-execution-ros2/quad_trajectory_execution/quad_trajectory_execution/watch_dogs/watch_dog_heartbeat.py",
+        "subscriptions": [
+          {
+            "msg_type": "Heartbeat",
+            "topic": "/quad/heartbeat",
+            "callback": "self.heartbeat_callback",
+            "qos_service_profile": "1"
+          }
+        ],
+        "publishers": []
+      }
+    ]
+  },
+  "/quad/gui/state": {
+    "publisher": [
+      {
+        "name": "mission_control",
+        "path": "/home/jan/ros2_ws/src/quad-trajectory-execution-ros2/quad_trajectory_execution/quad_trajectory_execution/mission_execution/mission_control.py",
+        "subscriptions": [
+          {
+            "msg_type": "TFMessage",
+            "topic": "/tf",
+            "callback": "self.update_distance_memory",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "GimbalDeviceAttitudeStatus",
+            "topic": "/quad/gimbal_attitude",
+            "callback": "self.gimbal_callback",
+            "qos_service_profile": "10"
+          }
+        ],
+        "publishers": [
+          {
+            "msg_type": "String",
+            "topic": "/quad/gui/state",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "TrajectoryPoint",
+            "topic": "/quad/gui/homepoint",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Float64",
+            "topic": "/quad/gui/distance_timer",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Float64",
+            "topic": "/quad/gui/inspection_timer",
+            "qos_service_profile": "10"
+          }
+        ]
+      }
+    ],
+    "subscriber": [
+      {
+        "name": "collision_prevention",
+        "path": "/home/jan/ros2_ws/src/quad-trajectory-execution-ros2/quad_trajectory_execution/quad_trajectory_execution/obstacle_avoidance/collision_prevention.py",
+        "subscriptions": [
+          {
+            "msg_type": "String",
+            "topic": "/quad/gui/state",
+            "callback": "self._handle_state_change",
+            "qos_service_profile": "10"
+          }
+        ],
+        "publishers": [
+          {
+            "msg_type": "TwistStamped",
+            "topic": "/quad/cmd_vel",
+            "qos_service_profile": "10"
+          }
+        ]
+      }
+    ]
+  },
+  "/quad/gui/distance_timer": {
+    "publisher": [
+      {
+        "name": "mission_control",
+        "path": "/home/jan/ros2_ws/src/quad-trajectory-execution-ros2/quad_trajectory_execution/quad_trajectory_execution/mission_execution/mission_control.py",
+        "subscriptions": [
+          {
+            "msg_type": "TFMessage",
+            "topic": "/tf",
+            "callback": "self.update_distance_memory",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "GimbalDeviceAttitudeStatus",
+            "topic": "/quad/gimbal_attitude",
+            "callback": "self.gimbal_callback",
+            "qos_service_profile": "10"
+          }
+        ],
+        "publishers": [
+          {
+            "msg_type": "String",
+            "topic": "/quad/gui/state",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "TrajectoryPoint",
+            "topic": "/quad/gui/homepoint",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Float64",
+            "topic": "/quad/gui/distance_timer",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Float64",
+            "topic": "/quad/gui/inspection_timer",
+            "qos_service_profile": "10"
+          }
+        ]
+      }
+    ],
+    "subscriber": []
+  },
+  "/quad/gui/inspection_timer": {
+    "publisher": [
+      {
+        "name": "mission_control",
+        "path": "/home/jan/ros2_ws/src/quad-trajectory-execution-ros2/quad_trajectory_execution/quad_trajectory_execution/mission_execution/mission_control.py",
+        "subscriptions": [
+          {
+            "msg_type": "TFMessage",
+            "topic": "/tf",
+            "callback": "self.update_distance_memory",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "GimbalDeviceAttitudeStatus",
+            "topic": "/quad/gimbal_attitude",
+            "callback": "self.gimbal_callback",
+            "qos_service_profile": "10"
+          }
+        ],
+        "publishers": [
+          {
+            "msg_type": "String",
+            "topic": "/quad/gui/state",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "TrajectoryPoint",
+            "topic": "/quad/gui/homepoint",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Float64",
+            "topic": "/quad/gui/distance_timer",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Float64",
+            "topic": "/quad/gui/inspection_timer",
+            "qos_service_profile": "10"
+          }
+        ]
+      }
+    ],
+    "subscriber": []
+  },
+  "/quad/gimbal_attitude": {
+    "publisher": [
+      {
+        "name": "mavlink_copter_manager",
+        "path": "/home/jan/ros2_ws/src/quad-trajectory-execution-ros2/quad_trajectory_execution/quad_trajectory_execution/copter_manager/mavlink_copter_manager.py",
+        "subscriptions": [
+          {
+            "msg_type": "Mavlink",
+            "topic": "/mavlink/from",
+            "callback": "self.mavlink_from_callback",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "BatteryState",
+            "topic": "/mavros/battery",
+            "callback": "self.battery_status_callback",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "ParamValue",
+            "topic": "/mavros/from/param_value",
+            "callback": "self.param_callback",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "TwistStamped",
+            "topic": "/quad/cmd_vel",
+            "callback": "self.send_set_position_target_local_ned",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Float64",
+            "topic": "/quad/pitch_to_poi",
+            "callback": "self.pitch_to_poi_callback",
+            "qos_service_profile": "10"
+          }
+        ],
+        "publishers": [
+          {
+            "msg_type": "PositionTarget",
+            "topic": "/mavros/to/position_target",
+            "qos_service_profile": "1"
+          },
+          {
+            "msg_type": "Heartbeat",
+            "topic": "/mavros/to/heartbeat",
+            "qos_service_profile": "1"
+          },
+          {
+            "msg_type": "Heartbeat",
+            "topic": "/quad/heartbeat",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Battery",
+            "topic": "/quad/battery",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Obstacle",
+            "topic": "/quad/obstacle",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "ObstacleDistance",
+            "topic": "/quad/obstacle_mavic3",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "ControlSystemState",
+            "topic": "/quad/current_vel",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "GimbalDeviceAttitudeStatus",
+            "topic": "/quad/gimbal_attitude",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Float64",
+            "topic": "/quad/ned_yaw_offset_dynamic",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Float64",
+            "topic": "/quad/ned_yaw_offset_takeoff",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "ParamExtValue",
+            "topic": "/quad/mavic/param_ext",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "ParamValue",
+            "topic": "/quad/mavic/param",
+            "qos_service_profile": "10"
+          }
+        ]
+      }
+    ],
+    "subscriber": [
+      {
+        "name": "mission_control",
+        "path": "/home/jan/ros2_ws/src/quad-trajectory-execution-ros2/quad_trajectory_execution/quad_trajectory_execution/mission_execution/mission_control.py",
+        "subscriptions": [
+          {
+            "msg_type": "TFMessage",
+            "topic": "/tf",
+            "callback": "self.update_distance_memory",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "GimbalDeviceAttitudeStatus",
+            "topic": "/quad/gimbal_attitude",
+            "callback": "self.gimbal_callback",
+            "qos_service_profile": "10"
+          }
+        ],
+        "publishers": [
+          {
+            "msg_type": "String",
+            "topic": "/quad/gui/state",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "TrajectoryPoint",
+            "topic": "/quad/gui/homepoint",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Float64",
+            "topic": "/quad/gui/distance_timer",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Float64",
+            "topic": "/quad/gui/inspection_timer",
+            "qos_service_profile": "10"
+          }
+        ]
+      },
+      {
+        "name": "simulation_copter_manager",
+        "path": "/home/jan/ros2_ws/src/quad-trajectory-execution-ros2/quad_trajectory_execution/quad_trajectory_execution/copter_manager/simulation_copter_manager.py",
+        "subscriptions": [
+          {
+            "msg_type": "GimbalDeviceAttitudeStatus",
+            "topic": "/quad/gimbal_attitude",
+            "callback": "self.gimbal_callback",
+            "qos_service_profile": "10"
+          }
+        ],
+        "publishers": [
+          {
+            "msg_type": "Twist",
+            "topic": "/simulation/drone/cmd_vel",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Heartbeat",
+            "topic": "/quad/heartbeat",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Battery",
+            "topic": "/quad/battery",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "ControlSystemState",
+            "topic": "/quad/current_vel",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Float64",
+            "topic": "/simulation/drone/camera_pitch_angle",
+            "qos_service_profile": "10"
+          }
+        ]
+      },
+      {
+        "name": "nav_cmd_publisher",
+        "path": "/home/jan/ros2_ws/src/quad-trajectory-execution-ros2/quad_trajectory_execution/quad_trajectory_execution/navigation/nav_cmd_publisher.py",
+        "subscriptions": [
+          {
+            "msg_type": "PointCloud2",
+            "topic": "/octomap_point_cloud_centers",
+            "callback": "self.octomap_obstacles",
+            "qos_service_profile": "1"
+          },
+          {
+            "msg_type": "Perception",
+            "topic": "/quad/perception",
+            "callback": "self.perception_obstacles",
+            "qos_service_profile": "1"
+          },
+          {
+            "msg_type": "GimbalDeviceAttitudeStatus",
+            "topic": "/quad/gimbal_attitude",
+            "callback": "self.gimbal_attitude_callback",
+            "qos_service_profile": "1"
+          }
+        ],
+        "publishers": [
+          {
+            "msg_type": "TwistStamped",
+            "topic": "/quad/cmd_vel_pgp",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Float64",
+            "topic": "/quad/pitch_to_poi",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Float64",
+            "topic": "/quad/gui/pitch_to_poi",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Float64",
+            "topic": "/quad/gui/yaw_to_poi",
+            "qos_service_profile": "10"
+          }
+        ]
+      },
+      {
+        "name": "frame_publisher_test",
+        "path": "/home/jan/ros2_ws/src/quad-trajectory-execution-ros2/quad_trajectory_execution/quad_trajectory_execution/test/camera_tracking/frame_publisher_test.py",
+        "subscriptions": [
+          {
+            "msg_type": "GimbalDeviceAttitudeStatus",
+            "topic": "/quad/gimbal_attitude",
+            "callback": "self.gimbal_attitude_callback",
+            "qos_service_profile": "1"
+          }
+        ],
+        "publishers": []
+      }
+    ]
+  },
+  "/quad/comp_info": {
+    "publisher": [],
+    "subscriber": [
+      {
+        "name": "trajectory_control",
+        "path": "/home/jan/ros2_ws/src/quad-trajectory-execution-ros2/quad_trajectory_execution/quad_trajectory_execution/mission_execution/trajectory_control.py",
+        "subscriptions": [
+          {
+            "msg_type": "PartInfo",
+            "topic": "/quad/comp_info",
+            "callback": "self.part_info_callback",
+            "qos_service_profile": "10"
+          }
+        ],
+        "publishers": [
+          {
+            "msg_type": "Float64",
+            "topic": "/quad/gui/total_progress",
+            "qos_service_profile": "10"
+          }
+        ]
+      }
+    ]
+  },
+  "/quad/perception": {
+    "publisher": [
+      {
+        "name": "obstacle_detection_v3",
+        "path": "/home/jan/ros2_ws/src/quad-trajectory-execution-ros2/quad_trajectory_execution/quad_trajectory_execution/obstacle_avoidance/obstacle_detection_v3.py",
+        "subscriptions": [],
+        "publishers": [
+          {
+            "msg_type": "Perception",
+            "topic": "/quad/perception",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "PointCloud2",
+            "topic": "/quad/cloud",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "PointCloud2",
+            "topic": "/quad/free_space",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "PointCloud2",
+            "topic": "/quad/rviz_obs",
+            "qos_service_profile": "10"
+          }
+        ]
+      },
+      {
+        "name": "obstacle_detection_v2",
+        "path": "/home/jan/ros2_ws/src/quad-trajectory-execution-ros2/quad_trajectory_execution/quad_trajectory_execution/obstacle_avoidance/obstacle_detection_v2.py",
+        "subscriptions": [
+          {
+            "msg_type": "Obstacle",
+            "topic": "/quad/obstacle",
+            "callback": "self.process_sensor_data",
+            "qos_service_profile": "10"
+          }
+        ],
+        "publishers": [
+          {
+            "msg_type": "Perception",
+            "topic": "/quad/perception",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "PointCloud2",
+            "topic": "/quad/cloud",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "PointCloud2",
+            "topic": "/quad/free_space",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "PointCloud2",
+            "topic": "/quad/rviz_obs",
+            "qos_service_profile": "10"
+          }
+        ]
+      }
+    ],
+    "subscriber": [
+      {
+        "name": "nav_cmd_publisher",
+        "path": "/home/jan/ros2_ws/src/quad-trajectory-execution-ros2/quad_trajectory_execution/quad_trajectory_execution/navigation/nav_cmd_publisher.py",
+        "subscriptions": [
+          {
+            "msg_type": "PointCloud2",
+            "topic": "/octomap_point_cloud_centers",
+            "callback": "self.octomap_obstacles",
+            "qos_service_profile": "1"
+          },
+          {
+            "msg_type": "Perception",
+            "topic": "/quad/perception",
+            "callback": "self.perception_obstacles",
+            "qos_service_profile": "1"
+          },
+          {
+            "msg_type": "GimbalDeviceAttitudeStatus",
+            "topic": "/quad/gimbal_attitude",
+            "callback": "self.gimbal_attitude_callback",
+            "qos_service_profile": "1"
+          }
+        ],
+        "publishers": [
+          {
+            "msg_type": "TwistStamped",
+            "topic": "/quad/cmd_vel_pgp",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Float64",
+            "topic": "/quad/pitch_to_poi",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Float64",
+            "topic": "/quad/gui/pitch_to_poi",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Float64",
+            "topic": "/quad/gui/yaw_to_poi",
+            "qos_service_profile": "10"
+          }
+        ]
+      }
+    ]
+  },
+  "/quad/cloud": {
+    "publisher": [
+      {
+        "name": "obstacle_detection_v3",
+        "path": "/home/jan/ros2_ws/src/quad-trajectory-execution-ros2/quad_trajectory_execution/quad_trajectory_execution/obstacle_avoidance/obstacle_detection_v3.py",
+        "subscriptions": [],
+        "publishers": [
+          {
+            "msg_type": "Perception",
+            "topic": "/quad/perception",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "PointCloud2",
+            "topic": "/quad/cloud",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "PointCloud2",
+            "topic": "/quad/free_space",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "PointCloud2",
+            "topic": "/quad/rviz_obs",
+            "qos_service_profile": "10"
+          }
+        ]
+      },
+      {
+        "name": "obstacle_detection_v2",
+        "path": "/home/jan/ros2_ws/src/quad-trajectory-execution-ros2/quad_trajectory_execution/quad_trajectory_execution/obstacle_avoidance/obstacle_detection_v2.py",
+        "subscriptions": [
+          {
+            "msg_type": "Obstacle",
+            "topic": "/quad/obstacle",
+            "callback": "self.process_sensor_data",
+            "qos_service_profile": "10"
+          }
+        ],
+        "publishers": [
+          {
+            "msg_type": "Perception",
+            "topic": "/quad/perception",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "PointCloud2",
+            "topic": "/quad/cloud",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "PointCloud2",
+            "topic": "/quad/free_space",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "PointCloud2",
+            "topic": "/quad/rviz_obs",
+            "qos_service_profile": "10"
+          }
+        ]
+      }
+    ],
+    "subscriber": []
+  },
+  "/quad/free_space": {
+    "publisher": [
+      {
+        "name": "obstacle_detection_v3",
+        "path": "/home/jan/ros2_ws/src/quad-trajectory-execution-ros2/quad_trajectory_execution/quad_trajectory_execution/obstacle_avoidance/obstacle_detection_v3.py",
+        "subscriptions": [],
+        "publishers": [
+          {
+            "msg_type": "Perception",
+            "topic": "/quad/perception",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "PointCloud2",
+            "topic": "/quad/cloud",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "PointCloud2",
+            "topic": "/quad/free_space",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "PointCloud2",
+            "topic": "/quad/rviz_obs",
+            "qos_service_profile": "10"
+          }
+        ]
+      },
+      {
+        "name": "obstacle_detection_v2",
+        "path": "/home/jan/ros2_ws/src/quad-trajectory-execution-ros2/quad_trajectory_execution/quad_trajectory_execution/obstacle_avoidance/obstacle_detection_v2.py",
+        "subscriptions": [
+          {
+            "msg_type": "Obstacle",
+            "topic": "/quad/obstacle",
+            "callback": "self.process_sensor_data",
+            "qos_service_profile": "10"
+          }
+        ],
+        "publishers": [
+          {
+            "msg_type": "Perception",
+            "topic": "/quad/perception",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "PointCloud2",
+            "topic": "/quad/cloud",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "PointCloud2",
+            "topic": "/quad/free_space",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "PointCloud2",
+            "topic": "/quad/rviz_obs",
+            "qos_service_profile": "10"
+          }
+        ]
+      }
+    ],
+    "subscriber": []
+  },
+  "/quad/rviz_obs": {
+    "publisher": [
+      {
+        "name": "obstacle_detection_v3",
+        "path": "/home/jan/ros2_ws/src/quad-trajectory-execution-ros2/quad_trajectory_execution/quad_trajectory_execution/obstacle_avoidance/obstacle_detection_v3.py",
+        "subscriptions": [],
+        "publishers": [
+          {
+            "msg_type": "Perception",
+            "topic": "/quad/perception",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "PointCloud2",
+            "topic": "/quad/cloud",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "PointCloud2",
+            "topic": "/quad/free_space",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "PointCloud2",
+            "topic": "/quad/rviz_obs",
+            "qos_service_profile": "10"
+          }
+        ]
+      },
+      {
+        "name": "obstacle_detection_v2",
+        "path": "/home/jan/ros2_ws/src/quad-trajectory-execution-ros2/quad_trajectory_execution/quad_trajectory_execution/obstacle_avoidance/obstacle_detection_v2.py",
+        "subscriptions": [
+          {
+            "msg_type": "Obstacle",
+            "topic": "/quad/obstacle",
+            "callback": "self.process_sensor_data",
+            "qos_service_profile": "10"
+          }
+        ],
+        "publishers": [
+          {
+            "msg_type": "Perception",
+            "topic": "/quad/perception",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "PointCloud2",
+            "topic": "/quad/cloud",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "PointCloud2",
+            "topic": "/quad/free_space",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "PointCloud2",
+            "topic": "/quad/rviz_obs",
+            "qos_service_profile": "10"
+          }
+        ]
+      }
+    ],
+    "subscriber": []
+  },
+  "/simulation/drone/camera": {
+    "publisher": [],
+    "subscriber": [
+      {
+        "name": "simulation_video_stream",
+        "path": "/home/jan/ros2_ws/src/quad-trajectory-execution-ros2/quad_trajectory_execution/quad_trajectory_execution/simulation/simulation_video_stream.py",
+        "subscriptions": [
+          {
+            "msg_type": "Image",
+            "topic": "/simulation/drone/camera",
+            "callback": "self.callback_sim_image_topic",
+            "qos_service_profile": "10"
+          }
+        ],
+        "publishers": []
+      }
+    ]
+  },
+  "/quad/laser": {
+    "publisher": [
+      {
+        "name": "simulated_distance_sensors",
+        "path": "/home/jan/ros2_ws/src/quad-trajectory-execution-ros2/quad_trajectory_execution/quad_trajectory_execution/simulation/simulated_distance_sensors.py",
+        "subscriptions": [],
+        "publishers": [
+          {
+            "msg_type": "ObstacleDistance",
+            "topic": "/quad/obstacle_mavic3",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "LaserScan",
+            "topic": "/quad/laser",
+            "qos_service_profile": "10"
+          }
+        ]
+      }
+    ],
+    "subscriber": []
+  },
+  "/simulation/drone/cmd_vel": {
+    "publisher": [
+      {
+        "name": "simulation_copter_manager",
+        "path": "/home/jan/ros2_ws/src/quad-trajectory-execution-ros2/quad_trajectory_execution/quad_trajectory_execution/copter_manager/simulation_copter_manager.py",
+        "subscriptions": [
+          {
+            "msg_type": "GimbalDeviceAttitudeStatus",
+            "topic": "/quad/gimbal_attitude",
+            "callback": "self.gimbal_callback",
+            "qos_service_profile": "10"
+          }
+        ],
+        "publishers": [
+          {
+            "msg_type": "Twist",
+            "topic": "/simulation/drone/cmd_vel",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Heartbeat",
+            "topic": "/quad/heartbeat",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Battery",
+            "topic": "/quad/battery",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "ControlSystemState",
+            "topic": "/quad/current_vel",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Float64",
+            "topic": "/simulation/drone/camera_pitch_angle",
+            "qos_service_profile": "10"
+          }
+        ]
+      }
+    ],
+    "subscriber": []
+  },
+  "/simulation/drone/camera_pitch_angle": {
+    "publisher": [
+      {
+        "name": "simulation_copter_manager",
+        "path": "/home/jan/ros2_ws/src/quad-trajectory-execution-ros2/quad_trajectory_execution/quad_trajectory_execution/copter_manager/simulation_copter_manager.py",
+        "subscriptions": [
+          {
+            "msg_type": "GimbalDeviceAttitudeStatus",
+            "topic": "/quad/gimbal_attitude",
+            "callback": "self.gimbal_callback",
+            "qos_service_profile": "10"
+          }
+        ],
+        "publishers": [
+          {
+            "msg_type": "Twist",
+            "topic": "/simulation/drone/cmd_vel",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Heartbeat",
+            "topic": "/quad/heartbeat",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Battery",
+            "topic": "/quad/battery",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "ControlSystemState",
+            "topic": "/quad/current_vel",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Float64",
+            "topic": "/simulation/drone/camera_pitch_angle",
+            "qos_service_profile": "10"
+          }
+        ]
+      }
+    ],
+    "subscriber": []
+  },
+  "/mavros/to/position_target": {
+    "publisher": [
+      {
+        "name": "mavlink_copter_manager",
+        "path": "/home/jan/ros2_ws/src/quad-trajectory-execution-ros2/quad_trajectory_execution/quad_trajectory_execution/copter_manager/mavlink_copter_manager.py",
+        "subscriptions": [
+          {
+            "msg_type": "Mavlink",
+            "topic": "/mavlink/from",
+            "callback": "self.mavlink_from_callback",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "BatteryState",
+            "topic": "/mavros/battery",
+            "callback": "self.battery_status_callback",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "ParamValue",
+            "topic": "/mavros/from/param_value",
+            "callback": "self.param_callback",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "TwistStamped",
+            "topic": "/quad/cmd_vel",
+            "callback": "self.send_set_position_target_local_ned",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Float64",
+            "topic": "/quad/pitch_to_poi",
+            "callback": "self.pitch_to_poi_callback",
+            "qos_service_profile": "10"
+          }
+        ],
+        "publishers": [
+          {
+            "msg_type": "PositionTarget",
+            "topic": "/mavros/to/position_target",
+            "qos_service_profile": "1"
+          },
+          {
+            "msg_type": "Heartbeat",
+            "topic": "/mavros/to/heartbeat",
+            "qos_service_profile": "1"
+          },
+          {
+            "msg_type": "Heartbeat",
+            "topic": "/quad/heartbeat",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Battery",
+            "topic": "/quad/battery",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Obstacle",
+            "topic": "/quad/obstacle",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "ObstacleDistance",
+            "topic": "/quad/obstacle_mavic3",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "ControlSystemState",
+            "topic": "/quad/current_vel",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "GimbalDeviceAttitudeStatus",
+            "topic": "/quad/gimbal_attitude",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Float64",
+            "topic": "/quad/ned_yaw_offset_dynamic",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Float64",
+            "topic": "/quad/ned_yaw_offset_takeoff",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "ParamExtValue",
+            "topic": "/quad/mavic/param_ext",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "ParamValue",
+            "topic": "/quad/mavic/param",
+            "qos_service_profile": "10"
+          }
+        ]
+      }
+    ],
+    "subscriber": []
+  },
+  "/mavros/to/heartbeat": {
+    "publisher": [
+      {
+        "name": "mavlink_copter_manager",
+        "path": "/home/jan/ros2_ws/src/quad-trajectory-execution-ros2/quad_trajectory_execution/quad_trajectory_execution/copter_manager/mavlink_copter_manager.py",
+        "subscriptions": [
+          {
+            "msg_type": "Mavlink",
+            "topic": "/mavlink/from",
+            "callback": "self.mavlink_from_callback",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "BatteryState",
+            "topic": "/mavros/battery",
+            "callback": "self.battery_status_callback",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "ParamValue",
+            "topic": "/mavros/from/param_value",
+            "callback": "self.param_callback",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "TwistStamped",
+            "topic": "/quad/cmd_vel",
+            "callback": "self.send_set_position_target_local_ned",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Float64",
+            "topic": "/quad/pitch_to_poi",
+            "callback": "self.pitch_to_poi_callback",
+            "qos_service_profile": "10"
+          }
+        ],
+        "publishers": [
+          {
+            "msg_type": "PositionTarget",
+            "topic": "/mavros/to/position_target",
+            "qos_service_profile": "1"
+          },
+          {
+            "msg_type": "Heartbeat",
+            "topic": "/mavros/to/heartbeat",
+            "qos_service_profile": "1"
+          },
+          {
+            "msg_type": "Heartbeat",
+            "topic": "/quad/heartbeat",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Battery",
+            "topic": "/quad/battery",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Obstacle",
+            "topic": "/quad/obstacle",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "ObstacleDistance",
+            "topic": "/quad/obstacle_mavic3",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "ControlSystemState",
+            "topic": "/quad/current_vel",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "GimbalDeviceAttitudeStatus",
+            "topic": "/quad/gimbal_attitude",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Float64",
+            "topic": "/quad/ned_yaw_offset_dynamic",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Float64",
+            "topic": "/quad/ned_yaw_offset_takeoff",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "ParamExtValue",
+            "topic": "/quad/mavic/param_ext",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "ParamValue",
+            "topic": "/quad/mavic/param",
+            "qos_service_profile": "10"
+          }
+        ]
+      }
+    ],
+    "subscriber": []
+  },
+  "/quad/mavic/param_ext": {
+    "publisher": [
+      {
+        "name": "mavlink_copter_manager",
+        "path": "/home/jan/ros2_ws/src/quad-trajectory-execution-ros2/quad_trajectory_execution/quad_trajectory_execution/copter_manager/mavlink_copter_manager.py",
+        "subscriptions": [
+          {
+            "msg_type": "Mavlink",
+            "topic": "/mavlink/from",
+            "callback": "self.mavlink_from_callback",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "BatteryState",
+            "topic": "/mavros/battery",
+            "callback": "self.battery_status_callback",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "ParamValue",
+            "topic": "/mavros/from/param_value",
+            "callback": "self.param_callback",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "TwistStamped",
+            "topic": "/quad/cmd_vel",
+            "callback": "self.send_set_position_target_local_ned",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Float64",
+            "topic": "/quad/pitch_to_poi",
+            "callback": "self.pitch_to_poi_callback",
+            "qos_service_profile": "10"
+          }
+        ],
+        "publishers": [
+          {
+            "msg_type": "PositionTarget",
+            "topic": "/mavros/to/position_target",
+            "qos_service_profile": "1"
+          },
+          {
+            "msg_type": "Heartbeat",
+            "topic": "/mavros/to/heartbeat",
+            "qos_service_profile": "1"
+          },
+          {
+            "msg_type": "Heartbeat",
+            "topic": "/quad/heartbeat",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Battery",
+            "topic": "/quad/battery",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Obstacle",
+            "topic": "/quad/obstacle",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "ObstacleDistance",
+            "topic": "/quad/obstacle_mavic3",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "ControlSystemState",
+            "topic": "/quad/current_vel",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "GimbalDeviceAttitudeStatus",
+            "topic": "/quad/gimbal_attitude",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Float64",
+            "topic": "/quad/ned_yaw_offset_dynamic",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Float64",
+            "topic": "/quad/ned_yaw_offset_takeoff",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "ParamExtValue",
+            "topic": "/quad/mavic/param_ext",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "ParamValue",
+            "topic": "/quad/mavic/param",
+            "qos_service_profile": "10"
+          }
+        ]
+      }
+    ],
+    "subscriber": []
+  },
+  "/quad/mavic/param": {
+    "publisher": [
+      {
+        "name": "mavlink_copter_manager",
+        "path": "/home/jan/ros2_ws/src/quad-trajectory-execution-ros2/quad_trajectory_execution/quad_trajectory_execution/copter_manager/mavlink_copter_manager.py",
+        "subscriptions": [
+          {
+            "msg_type": "Mavlink",
+            "topic": "/mavlink/from",
+            "callback": "self.mavlink_from_callback",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "BatteryState",
+            "topic": "/mavros/battery",
+            "callback": "self.battery_status_callback",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "ParamValue",
+            "topic": "/mavros/from/param_value",
+            "callback": "self.param_callback",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "TwistStamped",
+            "topic": "/quad/cmd_vel",
+            "callback": "self.send_set_position_target_local_ned",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Float64",
+            "topic": "/quad/pitch_to_poi",
+            "callback": "self.pitch_to_poi_callback",
+            "qos_service_profile": "10"
+          }
+        ],
+        "publishers": [
+          {
+            "msg_type": "PositionTarget",
+            "topic": "/mavros/to/position_target",
+            "qos_service_profile": "1"
+          },
+          {
+            "msg_type": "Heartbeat",
+            "topic": "/mavros/to/heartbeat",
+            "qos_service_profile": "1"
+          },
+          {
+            "msg_type": "Heartbeat",
+            "topic": "/quad/heartbeat",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Battery",
+            "topic": "/quad/battery",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Obstacle",
+            "topic": "/quad/obstacle",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "ObstacleDistance",
+            "topic": "/quad/obstacle_mavic3",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "ControlSystemState",
+            "topic": "/quad/current_vel",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "GimbalDeviceAttitudeStatus",
+            "topic": "/quad/gimbal_attitude",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Float64",
+            "topic": "/quad/ned_yaw_offset_dynamic",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Float64",
+            "topic": "/quad/ned_yaw_offset_takeoff",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "ParamExtValue",
+            "topic": "/quad/mavic/param_ext",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "ParamValue",
+            "topic": "/quad/mavic/param",
+            "qos_service_profile": "10"
+          }
+        ]
+      }
+    ],
+    "subscriber": []
+  },
+  "/mavros/battery": {
+    "publisher": [],
+    "subscriber": [
+      {
+        "name": "mavlink_copter_manager",
+        "path": "/home/jan/ros2_ws/src/quad-trajectory-execution-ros2/quad_trajectory_execution/quad_trajectory_execution/copter_manager/mavlink_copter_manager.py",
+        "subscriptions": [
+          {
+            "msg_type": "Mavlink",
+            "topic": "/mavlink/from",
+            "callback": "self.mavlink_from_callback",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "BatteryState",
+            "topic": "/mavros/battery",
+            "callback": "self.battery_status_callback",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "ParamValue",
+            "topic": "/mavros/from/param_value",
+            "callback": "self.param_callback",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "TwistStamped",
+            "topic": "/quad/cmd_vel",
+            "callback": "self.send_set_position_target_local_ned",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Float64",
+            "topic": "/quad/pitch_to_poi",
+            "callback": "self.pitch_to_poi_callback",
+            "qos_service_profile": "10"
+          }
+        ],
+        "publishers": [
+          {
+            "msg_type": "PositionTarget",
+            "topic": "/mavros/to/position_target",
+            "qos_service_profile": "1"
+          },
+          {
+            "msg_type": "Heartbeat",
+            "topic": "/mavros/to/heartbeat",
+            "qos_service_profile": "1"
+          },
+          {
+            "msg_type": "Heartbeat",
+            "topic": "/quad/heartbeat",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Battery",
+            "topic": "/quad/battery",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Obstacle",
+            "topic": "/quad/obstacle",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "ObstacleDistance",
+            "topic": "/quad/obstacle_mavic3",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "ControlSystemState",
+            "topic": "/quad/current_vel",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "GimbalDeviceAttitudeStatus",
+            "topic": "/quad/gimbal_attitude",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Float64",
+            "topic": "/quad/ned_yaw_offset_dynamic",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Float64",
+            "topic": "/quad/ned_yaw_offset_takeoff",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "ParamExtValue",
+            "topic": "/quad/mavic/param_ext",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "ParamValue",
+            "topic": "/quad/mavic/param",
+            "qos_service_profile": "10"
+          }
+        ]
+      }
+    ]
+  },
+  "/mavros/from/param_value": {
+    "publisher": [],
+    "subscriber": [
+      {
+        "name": "mavlink_copter_manager",
+        "path": "/home/jan/ros2_ws/src/quad-trajectory-execution-ros2/quad_trajectory_execution/quad_trajectory_execution/copter_manager/mavlink_copter_manager.py",
+        "subscriptions": [
+          {
+            "msg_type": "Mavlink",
+            "topic": "/mavlink/from",
+            "callback": "self.mavlink_from_callback",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "BatteryState",
+            "topic": "/mavros/battery",
+            "callback": "self.battery_status_callback",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "ParamValue",
+            "topic": "/mavros/from/param_value",
+            "callback": "self.param_callback",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "TwistStamped",
+            "topic": "/quad/cmd_vel",
+            "callback": "self.send_set_position_target_local_ned",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Float64",
+            "topic": "/quad/pitch_to_poi",
+            "callback": "self.pitch_to_poi_callback",
+            "qos_service_profile": "10"
+          }
+        ],
+        "publishers": [
+          {
+            "msg_type": "PositionTarget",
+            "topic": "/mavros/to/position_target",
+            "qos_service_profile": "1"
+          },
+          {
+            "msg_type": "Heartbeat",
+            "topic": "/mavros/to/heartbeat",
+            "qos_service_profile": "1"
+          },
+          {
+            "msg_type": "Heartbeat",
+            "topic": "/quad/heartbeat",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Battery",
+            "topic": "/quad/battery",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Obstacle",
+            "topic": "/quad/obstacle",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "ObstacleDistance",
+            "topic": "/quad/obstacle_mavic3",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "ControlSystemState",
+            "topic": "/quad/current_vel",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "GimbalDeviceAttitudeStatus",
+            "topic": "/quad/gimbal_attitude",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Float64",
+            "topic": "/quad/ned_yaw_offset_dynamic",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Float64",
+            "topic": "/quad/ned_yaw_offset_takeoff",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "ParamExtValue",
+            "topic": "/quad/mavic/param_ext",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "ParamValue",
+            "topic": "/quad/mavic/param",
+            "qos_service_profile": "10"
+          }
+        ]
+      }
+    ]
+  },
+  "/quad/pitch_to_poi": {
+    "publisher": [
+      {
+        "name": "nav_cmd_publisher",
+        "path": "/home/jan/ros2_ws/src/quad-trajectory-execution-ros2/quad_trajectory_execution/quad_trajectory_execution/navigation/nav_cmd_publisher.py",
+        "subscriptions": [
+          {
+            "msg_type": "PointCloud2",
+            "topic": "/octomap_point_cloud_centers",
+            "callback": "self.octomap_obstacles",
+            "qos_service_profile": "1"
+          },
+          {
+            "msg_type": "Perception",
+            "topic": "/quad/perception",
+            "callback": "self.perception_obstacles",
+            "qos_service_profile": "1"
+          },
+          {
+            "msg_type": "GimbalDeviceAttitudeStatus",
+            "topic": "/quad/gimbal_attitude",
+            "callback": "self.gimbal_attitude_callback",
+            "qos_service_profile": "1"
+          }
+        ],
+        "publishers": [
+          {
+            "msg_type": "TwistStamped",
+            "topic": "/quad/cmd_vel_pgp",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Float64",
+            "topic": "/quad/pitch_to_poi",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Float64",
+            "topic": "/quad/gui/pitch_to_poi",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Float64",
+            "topic": "/quad/gui/yaw_to_poi",
+            "qos_service_profile": "10"
+          }
+        ]
+      }
+    ],
+    "subscriber": [
+      {
+        "name": "mavlink_copter_manager",
+        "path": "/home/jan/ros2_ws/src/quad-trajectory-execution-ros2/quad_trajectory_execution/quad_trajectory_execution/copter_manager/mavlink_copter_manager.py",
+        "subscriptions": [
+          {
+            "msg_type": "Mavlink",
+            "topic": "/mavlink/from",
+            "callback": "self.mavlink_from_callback",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "BatteryState",
+            "topic": "/mavros/battery",
+            "callback": "self.battery_status_callback",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "ParamValue",
+            "topic": "/mavros/from/param_value",
+            "callback": "self.param_callback",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "TwistStamped",
+            "topic": "/quad/cmd_vel",
+            "callback": "self.send_set_position_target_local_ned",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Float64",
+            "topic": "/quad/pitch_to_poi",
+            "callback": "self.pitch_to_poi_callback",
+            "qos_service_profile": "10"
+          }
+        ],
+        "publishers": [
+          {
+            "msg_type": "PositionTarget",
+            "topic": "/mavros/to/position_target",
+            "qos_service_profile": "1"
+          },
+          {
+            "msg_type": "Heartbeat",
+            "topic": "/mavros/to/heartbeat",
+            "qos_service_profile": "1"
+          },
+          {
+            "msg_type": "Heartbeat",
+            "topic": "/quad/heartbeat",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Battery",
+            "topic": "/quad/battery",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Obstacle",
+            "topic": "/quad/obstacle",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "ObstacleDistance",
+            "topic": "/quad/obstacle_mavic3",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "ControlSystemState",
+            "topic": "/quad/current_vel",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "GimbalDeviceAttitudeStatus",
+            "topic": "/quad/gimbal_attitude",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Float64",
+            "topic": "/quad/ned_yaw_offset_dynamic",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Float64",
+            "topic": "/quad/ned_yaw_offset_takeoff",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "ParamExtValue",
+            "topic": "/quad/mavic/param_ext",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "ParamValue",
+            "topic": "/quad/mavic/param",
+            "qos_service_profile": "10"
+          }
+        ]
+      }
+    ]
+  },
+  "/quad/cmd_vel_pf": {
+    "publisher": [
+      {
+        "name": "gamepad_node",
+        "path": "/home/jan/ros2_ws/src/quad-trajectory-execution-ros2/quad_trajectory_execution/quad_trajectory_execution/navigation/gamepad_node.py",
+        "subscriptions": [
+          {
+            "msg_type": "Joy",
+            "topic": "/joy",
+            "callback": "self.joy_callback",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "TwistStamped",
+            "topic": "/quad/cmd_vel_pgp",
+            "callback": "self.cmd_vel_callback",
+            "qos_service_profile": "10"
+          }
+        ],
+        "publishers": [
+          {
+            "msg_type": "TwistStamped",
+            "topic": "/quad/cmd_vel_pf",
+            "qos_service_profile": "10"
+          }
+        ]
+      }
+    ],
+    "subscriber": []
+  },
+  "/joy": {
+    "publisher": [],
+    "subscriber": [
+      {
+        "name": "gamepad_node",
+        "path": "/home/jan/ros2_ws/src/quad-trajectory-execution-ros2/quad_trajectory_execution/quad_trajectory_execution/navigation/gamepad_node.py",
+        "subscriptions": [
+          {
+            "msg_type": "Joy",
+            "topic": "/joy",
+            "callback": "self.joy_callback",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "TwistStamped",
+            "topic": "/quad/cmd_vel_pgp",
+            "callback": "self.cmd_vel_callback",
+            "qos_service_profile": "10"
+          }
+        ],
+        "publishers": [
+          {
+            "msg_type": "TwistStamped",
+            "topic": "/quad/cmd_vel_pf",
+            "qos_service_profile": "10"
+          }
+        ]
+      }
+    ]
+  },
+  "/quad/cmd_vel_pgp": {
+    "publisher": [
+      {
+        "name": "nav_cmd_publisher",
+        "path": "/home/jan/ros2_ws/src/quad-trajectory-execution-ros2/quad_trajectory_execution/quad_trajectory_execution/navigation/nav_cmd_publisher.py",
+        "subscriptions": [
+          {
+            "msg_type": "PointCloud2",
+            "topic": "/octomap_point_cloud_centers",
+            "callback": "self.octomap_obstacles",
+            "qos_service_profile": "1"
+          },
+          {
+            "msg_type": "Perception",
+            "topic": "/quad/perception",
+            "callback": "self.perception_obstacles",
+            "qos_service_profile": "1"
+          },
+          {
+            "msg_type": "GimbalDeviceAttitudeStatus",
+            "topic": "/quad/gimbal_attitude",
+            "callback": "self.gimbal_attitude_callback",
+            "qos_service_profile": "1"
+          }
+        ],
+        "publishers": [
+          {
+            "msg_type": "TwistStamped",
+            "topic": "/quad/cmd_vel_pgp",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Float64",
+            "topic": "/quad/pitch_to_poi",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Float64",
+            "topic": "/quad/gui/pitch_to_poi",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Float64",
+            "topic": "/quad/gui/yaw_to_poi",
+            "qos_service_profile": "10"
+          }
+        ]
+      }
+    ],
+    "subscriber": [
+      {
+        "name": "gamepad_node",
+        "path": "/home/jan/ros2_ws/src/quad-trajectory-execution-ros2/quad_trajectory_execution/quad_trajectory_execution/navigation/gamepad_node.py",
+        "subscriptions": [
+          {
+            "msg_type": "Joy",
+            "topic": "/joy",
+            "callback": "self.joy_callback",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "TwistStamped",
+            "topic": "/quad/cmd_vel_pgp",
+            "callback": "self.cmd_vel_callback",
+            "qos_service_profile": "10"
+          }
+        ],
+        "publishers": [
+          {
+            "msg_type": "TwistStamped",
+            "topic": "/quad/cmd_vel_pf",
+            "qos_service_profile": "10"
+          }
+        ]
+      }
+    ]
+  },
+  "/quad/gui/pitch_to_poi": {
+    "publisher": [
+      {
+        "name": "nav_cmd_publisher",
+        "path": "/home/jan/ros2_ws/src/quad-trajectory-execution-ros2/quad_trajectory_execution/quad_trajectory_execution/navigation/nav_cmd_publisher.py",
+        "subscriptions": [
+          {
+            "msg_type": "PointCloud2",
+            "topic": "/octomap_point_cloud_centers",
+            "callback": "self.octomap_obstacles",
+            "qos_service_profile": "1"
+          },
+          {
+            "msg_type": "Perception",
+            "topic": "/quad/perception",
+            "callback": "self.perception_obstacles",
+            "qos_service_profile": "1"
+          },
+          {
+            "msg_type": "GimbalDeviceAttitudeStatus",
+            "topic": "/quad/gimbal_attitude",
+            "callback": "self.gimbal_attitude_callback",
+            "qos_service_profile": "1"
+          }
+        ],
+        "publishers": [
+          {
+            "msg_type": "TwistStamped",
+            "topic": "/quad/cmd_vel_pgp",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Float64",
+            "topic": "/quad/pitch_to_poi",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Float64",
+            "topic": "/quad/gui/pitch_to_poi",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Float64",
+            "topic": "/quad/gui/yaw_to_poi",
+            "qos_service_profile": "10"
+          }
+        ]
+      }
+    ],
+    "subscriber": []
+  },
+  "/quad/gui/yaw_to_poi": {
+    "publisher": [
+      {
+        "name": "nav_cmd_publisher",
+        "path": "/home/jan/ros2_ws/src/quad-trajectory-execution-ros2/quad_trajectory_execution/quad_trajectory_execution/navigation/nav_cmd_publisher.py",
+        "subscriptions": [
+          {
+            "msg_type": "PointCloud2",
+            "topic": "/octomap_point_cloud_centers",
+            "callback": "self.octomap_obstacles",
+            "qos_service_profile": "1"
+          },
+          {
+            "msg_type": "Perception",
+            "topic": "/quad/perception",
+            "callback": "self.perception_obstacles",
+            "qos_service_profile": "1"
+          },
+          {
+            "msg_type": "GimbalDeviceAttitudeStatus",
+            "topic": "/quad/gimbal_attitude",
+            "callback": "self.gimbal_attitude_callback",
+            "qos_service_profile": "1"
+          }
+        ],
+        "publishers": [
+          {
+            "msg_type": "TwistStamped",
+            "topic": "/quad/cmd_vel_pgp",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Float64",
+            "topic": "/quad/pitch_to_poi",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Float64",
+            "topic": "/quad/gui/pitch_to_poi",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Float64",
+            "topic": "/quad/gui/yaw_to_poi",
+            "qos_service_profile": "10"
+          }
+        ]
+      }
+    ],
+    "subscriber": []
+  },
+  "/octomap_point_cloud_centers": {
+    "publisher": [],
+    "subscriber": [
+      {
+        "name": "nav_cmd_publisher",
+        "path": "/home/jan/ros2_ws/src/quad-trajectory-execution-ros2/quad_trajectory_execution/quad_trajectory_execution/navigation/nav_cmd_publisher.py",
+        "subscriptions": [
+          {
+            "msg_type": "PointCloud2",
+            "topic": "/octomap_point_cloud_centers",
+            "callback": "self.octomap_obstacles",
+            "qos_service_profile": "1"
+          },
+          {
+            "msg_type": "Perception",
+            "topic": "/quad/perception",
+            "callback": "self.perception_obstacles",
+            "qos_service_profile": "1"
+          },
+          {
+            "msg_type": "GimbalDeviceAttitudeStatus",
+            "topic": "/quad/gimbal_attitude",
+            "callback": "self.gimbal_attitude_callback",
+            "qos_service_profile": "1"
+          }
+        ],
+        "publishers": [
+          {
+            "msg_type": "TwistStamped",
+            "topic": "/quad/cmd_vel_pgp",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Float64",
+            "topic": "/quad/pitch_to_poi",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Float64",
+            "topic": "/quad/gui/pitch_to_poi",
+            "qos_service_profile": "10"
+          },
+          {
+            "msg_type": "Float64",
+            "topic": "/quad/gui/yaw_to_poi",
+            "qos_service_profile": "10"
+          }
+        ]
+      }
+    ]
+  },
+  "cloud_in": {
+    "publisher": [
+      {
+        "name": "octomap_obs_pub",
+        "path": "/home/jan/ros2_ws/src/quad-trajectory-execution-ros2/quad_trajectory_execution/quad_trajectory_execution/test/octomap/octomap_obs_pub.py",
+        "subscriptions": [],
+        "publishers": [
+          {
+            "msg_type": "PointCloud2",
+            "topic": "cloud_in",
+            "qos_service_profile": "10"
+          }
+        ]
+      }
+    ],
+    "subscriber": []
+  },
+  "/quad/free_space_in": {
+    "publisher": [
+      {
+        "name": "octomap_free_space_pub",
+        "path": "/home/jan/ros2_ws/src/quad-trajectory-execution-ros2/quad_trajectory_execution/quad_trajectory_execution/test/octomap/octomap_free_space_pub.py",
+        "subscriptions": [],
+        "publishers": [
+          {
+            "msg_type": "PointCloud2",
+            "topic": "/quad/free_space_in",
+            "qos_service_profile": "10"
+          }
+        ]
+      }
+    ],
+    "subscriber": []
+  },
+  "/mavros/quad_connect/to/heartbeat": {
+    "publisher": [
+      {
+        "name": "mavic_command_test",
+        "path": "/home/jan/ros2_ws/src/quad-trajectory-execution-ros2/quad_trajectory_execution/quad_trajectory_execution/test/copter_manager/mavic_command_test.py",
+        "subscriptions": [],
+        "publishers": [
+          {
+            "msg_type": "Heartbeat",
+            "topic": "/mavros/quad_connect/to/heartbeat",
+            "qos_service_profile": "1"
+          },
+          {
+            "msg_type": "TwistStamped",
+            "topic": "/quad/cmd_vel",
+            "qos_service_profile": "10"
+          }
+        ]
+      }
+    ],
+    "subscriber": []
+  }
+}
